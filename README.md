@@ -15,7 +15,6 @@ by comparing different years.
 
 ![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Proj_proposal1.jpg)
 
-
 The visualization will include:
 
 #### MVP:
@@ -46,12 +45,18 @@ For this project I will use data from:
   and gives it a score on, among other variables, how left-right it is. This I can use to judge not
   the shifts, weighted by actual data from that time.
 
-The external components I will use
+The external components will consist of d3 libraries that can create [maps](https://www.theguardian.com/environment/interactive/2013/may/14/alaska-villages-frontline-global-warming) with interactive electoral data.
 
 Some similar visualizations will include:
-* The map used by the [Kiesraad](https://www.verkiezingsuitslagen.nl/verkiezingen/detail/TK20170315).
+* The map used by the [Kiesraad](https://www.verkiezingsuitslagen.nl/verkiezingen/detail/TK20170315). I will use a similar
+  map of Dutch municipalities and fill them with either the color of the largest party in a particular year or the left-right
+  score for a particular year.
 * This visualization from [FiveThirtyEight](https://fivethirtyeight.com/features/americas-electoral-map-is-changing/),
   which shows shifts in the electoral preferences for US districts. Since the US has a more binary political
   system, it is easier to show shifts in preference (depicted by voter margins for either the Democrats of Republicans)
   so I would like to make a similar graph but with the weighted score of left-right and/or progressive/conservative.
-* This visualization by [Kieskompas](https://www.kieskompas.nl/media/filer_public/5a/9d/5a9d70f7-7ce7-47da-9e71-9676b6d7e61b/landschap_tk.png), which shows the position of parties (and the person who fills in the kieskompas) on a political matrix
+* This visualization by [Kieskompas](https://www.kieskompas.nl/media/filer_public/5a/9d/5a9d70f7-7ce7-47da-9e71-9676b6d7e61b/landschap_tk.png), which shows the position of parties (and the person who fills in the kieskompas) on a political matrix.
+
+The most difficult to implement will probably be to calculate the left-right score for every region, for multiple years. I know
+where I can get data for this but to actually implement this will probably be quite hard since the political preferences of
+parties can vary per year and that some parties just pop up or cease to exist, which makes comparison more difficult. 
