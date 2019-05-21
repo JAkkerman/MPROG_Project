@@ -13,6 +13,8 @@ My data visualization will show electoral data per region (municipality, provinc
 whole country) for multiple (general) elections, which will show electoral shifts
 by comparing different years.
 
+![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Proj_proposal1.jpg)
+
 
 The visualization will include:
 
@@ -23,6 +25,7 @@ The visualization will include:
   * A time series showing the percentage all parties got over the years.
   * A search bar that allows to search for a party and then shows the development of this
     particular party in the region of choice.
+  * An overview of the largest party (currently and overall), largest margin and other relevant data.
 
 #### Optional:
 Show the shifts in political preference, so how 'right' of 'left' is the vote in this
@@ -51,4 +54,4 @@ Some similar visualizations will include:
   which shows shifts in the electoral preferences for US districts. Since the US has a more binary political
   system, it is easier to show shifts in preference (depicted by voter margins for either the Democrats of Republicans)
   so I would like to make a similar graph but with the weighted score of left-right and/or progressive/conservative.
-* This visualization by [Kieskompas](https://www.kieskompas.nl/media/filer_public/5a/9d/5a9d70f7-7ce7-47da-9e71-9676b6d7e61b/landschap_tk.png), which shows
+* This visualization by [Kieskompas](https://www.kieskompas.nl/media/filer_public/5a/9d/5a9d70f7-7ce7-47da-9e71-9676b6d7e61b/landschap_tk.png), which shows the position of parties (and the person who fills in the kieskompas) on a political matrix
