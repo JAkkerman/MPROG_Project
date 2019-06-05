@@ -10,9 +10,10 @@ The data is provided in a CSV, so I will build a CSV to JSON converter in python
 
 I will transform the data in such a way that you have a dictionary for every year. In this array there are dictionaries for every municipality which contain the electoral data and the Left-Right score for this municipality in this particular year. Additionally, I will make a dictionary in every year with the manifesto scores.
 
-Since there is no usable database for all the merging municipalities, The development graphs will be limited to the municipalities that have existed since 1946. This means a lot of municipalities cannot be evaluated, especially the smaller ones. 
+Since there is no usable database for all the merging municipalities, The development graphs will be limited to the municipalities that have existed since 1946. This means a lot of municipalities cannot be evaluated, especially the smaller ones.
 
-<code>Data = {1960: {municipalities: {Abcoude: {CPN: 3.5%, ... , LR-score: 3.560}, ...}, manifestos: {CPN: -40.00, ...}}...}</code>
+<!-- <code>Data = {1960: {municipalities: {Abcoude: {CPN: 3.5%, ... , LR-score: 3.560}, ...}, manifestos: {CPN: -40.00, ...}}...}</code> -->
+<code>Data = {Aalsmeer: {1946: {CPN: 3.5%, ... , LR-score: 3.560}, ...}, ...}</code>
 
 ## Overview of components
 
