@@ -1,0 +1,40 @@
+<!-- Joos Akkerman (11304723)
+MPROG Project
+This file visualizes three graphs that are linked, and visualize changes in political preferences in
+the Netherlands -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="project.css">
+    <meta charset="utf-8">
+    <title>Politieke Verschuivingen</title>
+
+    <!-- Import D3 V5 -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+      d3v5 = d3;
+      window.d3 = null;
+    </script>
+
+    <!-- Import D3 V3 and TopoJSON -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script> -->
+    <script src="datamaps.js"></script>
+    <script>
+        d3v3 = d3;
+        window.d3 = null;
+    </script>
+    <script src="d3-tip.js"></script>
+    <script src="project.js"></script>
+  </head>
+  <body>
+    <h style="font-family: arial"><b>Verschuivingen in Politieke voorkeur per gemeente (1946-2017)</b></h><br>
+    <a style="font-family: arial" href="https://www.verkiezingsuitslagen.nl/verkiezingen/">Kiesraad</a>
+    <a style="font-family: arial" href="https://manifesto-project.wzb.eu/">Manifesto Project</a>
+    <div id="map"></div>
+    <div id="linechart"></div>
+    <div id="changechart"></div>
+  </body>
+
+</html>
