@@ -17,14 +17,6 @@ the Netherlands -->
       window.d3 = null;
     </script>
 
-    <!-- Import D3 V3 and TopoJSON -->
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script> -->
-    <script src="datamaps.js"></script>
-    <script>
-        d3v3 = d3;
-        window.d3 = null;
-    </script>
     <script src="d3-tip.js"></script>
     <script src="project.js"></script>
   </head>
@@ -36,5 +28,23 @@ the Netherlands -->
     <div id="linechart"></div>
     <div id="changechart"></div>
   </body>
+
+  <!-- Import D3 V3 and TopoJSON -->
+  <script src="datamaps.js"></script>
+  <script src="topojson.js"></script>
+  <script src="topojson.min.js"></script>
+  <script>
+
+    var topology = topojson.topology({foo: geojson});
+
+  </script>
+  <script src="NL_mun_2017.topojson"></script>
+  <!-- <script src="NL_mun_2017.topojson"></script> -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script>
+      d3v3 = d3;
+      window.d3 = null;
+  </script>
 
 </html>
