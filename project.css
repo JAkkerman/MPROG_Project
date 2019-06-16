@@ -22,3 +22,13 @@ body{
   top: 350px;
   right: 0px;
 }
+
+.d3-tip {
+  line-height: 1;
+  padding: 12px;
+  background: rgb(86, 1, 237);
+  color: #fff;
+  border-radius: 1px;
+  font-family: arial;
+  font-size: 12px;
+}

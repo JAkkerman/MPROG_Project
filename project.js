@@ -17,17 +17,16 @@ var electionYears = ['1946', '1948', '1952', '1956', '1959', '1963', '1967', '19
 
 d3v5.json('data.json').then(function(data){
 
-  console.log(data)
-
-  // draw map
-  // drawMap(data);
-
   // scale properties for line chart
   lineScales = scale(line_start_w, line_end_w, line_start_h, line_end_h);
 
+  // draw map
+  drawMap(data, lineScales[0], lineScales[1]);
+
   // draw first line chart
   d3v5.json('data_NL.json').then(function(data_NL){
-    drawLineChart(data_NL, lineScales[0], lineScales[1]);
+    console.log(data_NL[0]['Nederland']);
+    drawLineChart(data_NL[0]['Nederland'], lineScales[0], lineScales[1]);
   })
 
   // draw first change chart
@@ -35,40 +34,62 @@ d3v5.json('data.json').then(function(data){
 
 });
 
-function drawMap(data) {
+function drawMap(data, xScale, yScale) {
 
-  d3v5.json("NL_mun_2017.topojson").then(function(mun) {
+  d3v5.json("NL_mun_2017.geojson").then(function(mun) {
   // if (error) throw error;
-  console.log(mun);
-  var municipalities = topojson.feature(mun, mun.objects.Gemeenten_Bestuurlijke_Grenzen_2017).features
+    // console.log(mun);
 
-  console.log(municipalities)
+    // var municipalities = topojson.feature(mun, mun.objects.Gemeenten_Bestuurlijke_Grenzen_2017).features
 
-  var projection = d3v5.geoMercator()
-                       .scale(1)
-                       .translate([0,0]);
+    // console.log(municipalities);
 
-  var path = d3v5.geoPath()
-                 .projection(projection);
+    var projection = d3v5.geoMercator()
+                         .scale(5000)
+                         .center([0, 52])
+                         .rotate([-5, 0])
+                         .translate([map_w/2, map_h/2]);
 
-  var b = path.bounds(mun),
-      s = .95 / Math.max((b[1][0] - b[0][0]) / map_w, (b[1][1] - b[0][1]) / map_h),
-      t = [(map_w - s * (b[1][0] + b[0][0])) / 2, (map_h - s * (b[1][1] + b[0][1])) / 2];
+    var path = d3v5.geoPath()
+                   .projection(projection);
 
-      projection.scale(s)
-                .translate(t);
+    // var b = path.bounds(mun),
+    //     s = .95 / Math.max((b[1][0] - b[0][0]) / map_w, (b[1][1] - b[0][1]) / map_h),
+    //     t = [(map_w - s * (b[1][0] + b[0][0])) / 2, (map_h - s * (b[1][1] + b[0][1])) / 2];
 
-  var svg = d3v5.select("#map")
-                .append("svg")
-                .attr("class", "map")
-                .attr("width", map_w)
-                .attr("height", map_h);
+    // console.log(b);
 
-  svg.selectAll("path")
-     .data(municipalities)
-     .enter().append("path")
-     .attr("class", "municipality")
-     .attr("d", path)
+    // projection.scale(s)
+    //           .translate(t);
+
+    var svg = d3v5.select("#map")
+                  .append("svg")
+                  .attr("class", "map")
+                  .attr("width", map_w)
+                  .attr("height", map_h);
+
+    var tip = d3v5.tip()
+                  .attr('class', 'd3-tip')
+                  .offset([-10, 0])
+                  .html(function(d) {
+                    return "<strong>" + d.properties.Gemeentenaam + "</strong>";
+                  });
+
+    svg.call(tip);
+
+    svg.selectAll("path")
+       .data(mun.features)
+       .enter()
+       .append("path")
+       .attr("class", "municipality")
+       .attr("d", path)
+       .on("mouseover", tip.show)
+       .on("mouseout", tip.hide)
+       .on("click", function(d){
+         // console.log(data[0][d.properties.Gemeentenaam]);
+         d3v5.selectAll(".linechart").remove()
+         drawLineChart(data[0][d.properties.Gemeentenaam], xScale, yScale)
+       });
 
    });
 };
@@ -95,12 +116,26 @@ function scale(start_w, end_w, start_h, end_h) {
 
 function drawLineChart(data, xScale, yScale) {
 
+  console.log(data);
+
+  // make svg for line chart
   var svg = d3v5.select("#linechart")
                 .append("svg")
                 .attr("class", "linechart")
                 .attr("width", line_w)
                 .attr("height", line_h);
 
+  var linetip = d3v5.tip()
+                .attr('class', 'd3-tip')
+                .offset([-10, 0])
+                .html(function(d) {
+                  console.log(d);
+                  // return "<strong>" + d.properties.Gemeentenaam + "</strong>";
+                });
+
+  svg.call(linetip);
+
+  // create axes
   var xAxis = d3v5.axisBottom(xScale);
   var yAxis = d3v5.axisLeft(yScale);
 
@@ -113,23 +148,81 @@ function drawLineChart(data, xScale, yScale) {
      .attr("transform", "translate("+ line_start_w +", "+ line_start_h +")")
      .call(yAxis);
 
-  console.log(data)
-  var line = d3v5.line()
-                  .x(function(data) {
-                    console.log('yeet')
-                    console.log(data)
-                    return xScale(d.date);
-                  })
-                  .y(function(d) {
-                    return yScale(d.worth);
-                  });
+  // convert data from dict to array
+  var lineData = [], party;
 
-  svg.append("path")
-      .data(data)
-      .enter()
-      .attr("d", line);
+  for (var type in data) {
+      party = {};
+      party.party = type;
+      party.years = data[type];
+      lineData.push(party);
+  }
+
+  console.log(lineData);
+
+  var line = d3v5.line()
+                 .x(function(d) {
+                   // console.log(d);
+                   return xScale(d.year);
+                 })
+                 .y(function(d) {
+                   return yScale(d.value);
+                 });
+
+  lineData.forEach(function(d) {
+    var party = svg.append("path")
+                   // .data(lineData)
+                   // .enter()
+                   .attr("d", line(d.years))
+                   .attr("fill", "none")
+                   .attr("stroke", "blue")
+                   .on("mouseover", linetip.show)
+                   .on("mouseout", linetip.hide)
+  })
+
+// // console.log(lineData);
+//   lineData.forEach(function(d) {
+//     console.log(d.years);
+//     svg.append("line")
+//        // .data(d).enter()
+//        // .append("path")
+//        .attr("class", "line")
+//        .attr("d", line(d.years))
+//        .attr("fill", "none")
+//        .attr("stroke", "blue")
+//   })
+
+  // svg.selectAll(".line")
+  //    .data(lineData)
+  //    .enter()
+  //    .append("path")
+  //    .attr("class", "line")
+  //    .attr("d", line(lineData))
+
+
+
+  // var party =  d3v5.selectAll(".party")
+  //                .data(lineData)
+  //                .enter()
+  //                .attr("width", function(d) {
+  //                  console.log(lineData);
+  //                })
+  //                .append("path")
+  //                .attr("class", "party");
+
+  // console.log(data);
+  // parties.selectAll("path")
+  //    .attr("class", "line")
+  //    .attr("d", function(d) {
+  //      console.log(d);
+  //      return line(d);
+  //    });
 };
 
 function drawChangeChart(data) {
+
+};
+
+function partyColor(party) {
 
 };

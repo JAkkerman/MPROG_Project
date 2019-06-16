@@ -10,4 +10,11 @@
 
 11-06-2019: Ik heb geprobeerd de kaart van Nederland te projecteren, maar dit is nog niet gelukt. Tot nu toe is de kaart nog heel klein, en ik krijg het nog niet voor elkaar om de kaart op de manier van linked views te projecteren. Er lijkt een fout te zitten in de topojson van de Nederlandse gemeenten. Ik ga dit morgen vragen.
 
-12-06-2019: 
+12-06-2019: Ik heb gevraagd naar de kaart, maar de projectie is nog steeds niet gelukt. Wel heb ik nu de assen van de lijngrafiek kunnen tekenen.
+
+13-06-2019: De kaart heb ik nu aan het werk gekregen en ik kan de namen van de gemeenten hier nu ook uit halen. Nu moet ik mijn datastructuur nog veranderen, aangezien de huidige vorm onhandig is bij het maken van de lijngrafiek. Zodra dit klaar is kan ik de twee datasets gaan koppelen en lijngrafieken gaan tekenen.
+
+14-06-2019: Tijdens het feedback-moment met Nigel hebben we nog een keer naar mijn datastructuur gekeken, die nog wat verandering kan gebruiken. Ook voegt mijn data-algorithme nog niet altijd de juiste data in de JSON (met name bij de rile en de uitslagen van GroenLinks), waar ik deze dag aan gewerkt heb.
+
+15-06-2019: Na veranderingen in mijn datastructuur en meer onderzoek naar de d3 line chart kan ik nu resultaten in een linechart tekenen. Dit gaat echter nog niet helemaal goed, en ik weet niet of dit ligt aan mijn data of aan JavaScript. Maandag zal ik hier naar vragen.
+Ook ga ik vandaag proberen de laatste fouten uit mijn data te halen (zoals bijvoorbeeld dat elke gemeente bij 2017 dezelfde rile krijgt, of dat sommige partijnamen niet hetzelfde zijn doorgevoerd)
