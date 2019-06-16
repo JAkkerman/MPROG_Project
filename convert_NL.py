@@ -8,7 +8,7 @@ This script converts data obtained from a .csv file to JSON format
 import json
 import numpy as np
 import pandas as pd
-import convert
+# import convert
 
 ELECTION_YEARS = ["1946", "1948", "1952", "1956", "1959", "1963", "1967", "1971", "1972", "1977", "1981",\
                   "1982", "1986", "1989", "1994", "1998", "2002", "2003", "2006", "2010", "2012"]
@@ -28,14 +28,16 @@ def clean(ELECTION_YEARS):
         input = pd.read_csv(f"Data_NL/{year}.csv", delimiter=';')
         input.fillna(value=0.0, inplace=True)
         parties = partylist(input)
-        result_NL = percentage(year, parties, input)
-        results_NL[year] = result_NL
+        results_NL = percentage(results_NL, year, parties, input)
+        # results_NL[year] = result_NL
+
+    print(results_NL)
 
     # clean manifesto data
-    manifestos = cleanmanifestos(MANIFESTO_CSV)
+    # manifestos = cleanmanifestos(MANIFESTO_CSV)
 
     # calculate left-right score for every municipality
-    results_NL = LRscore(results_NL, manifestos)
+    # results_NL = LRscore(results_NL, manifestos)
 
     final_results_NL = {}
     final_results_NL["Nederland"] = results_NL
@@ -91,24 +93,47 @@ def LRscore(results_NL, manifestos):
 
     return results_NL
 
-def percentage(year, parties, input):
+def percentage(results_NL, year, parties, input):
     """
     Converts the amount of votes to percentages
     """
-
-    results = {}
-
+    print(year)
     for row in range(len(input)):
         if input.loc[row, 'RegioUitslag'] == 'AantalGeldigeStemmen':
             votes = input.loc[row, 'AantalStemmen']
+            break
 
     for party in parties:
         for row in range(len(input)):
             if input.loc[row, 'Partij'] == party:
-                if input.loc[row, 'AantalStemmen']/votes * 100 > 1:
-                    results[input.loc[row, 'Partij']] = (input.loc[row, 'AantalStemmen']/votes * 100)
 
-    return results
+                # change party names to make them match
+                if party == 'PvdA':
+                    party = 'Partij van de Arbeid (P.v.d.A.)'
+                elif party == 'PVV':
+                    party = 'PVV (Partij voor de Vrijheid)'
+                elif party == 'CDA':
+                    party = 'Christen Democratisch App\u00e8l (CDA)'
+                elif party == 'GROENLINKS':
+                    party = 'GL'
+                elif party == 'SP':
+                    party = 'SP (Socialistische Partij)'
+                elif party == 'SGP':
+                    party = 'Staatkundig Gereformeerde Partij (SGP)'
+                elif party == 'PvdD':
+                    party = 'Partij voor de Dieren'
+                elif party == 'CU':
+                    party = 'ChristenUnie'
+                elif party == 'D66':
+                    party = 'Democraten 66 (D66)'
+
+                result = input.loc[row, 'AantalStemmen']/votes * 100
+                if result > 1:
+                    if party not in results_NL:
+                        results_NL[party] = []
+                    results_NL[party].append({'year': year, 'value': result})
+
+    return results_NL
 
 
 def convert(data, outputJSON):
