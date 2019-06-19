@@ -13,6 +13,7 @@ import pandas as pd
 ELECTION_YEARS = ["1946", "1948", "1952", "1956", "1959", "1963", "1967", "1971", "1972", "1977", "1981",\
                   "1982", "1986", "1989", "1994", "1998", "2002", "2003", "2006", "2010", "2012"]
 OUTPUT_JSON = "data_NL.json"
+OUTPUT_JSON_RILE = "data_rile.json"
 MANIFESTO_CSV = "Data/ManProj.csv"
 # DEFAULT_CAT = []
 
@@ -31,13 +32,13 @@ def clean(ELECTION_YEARS):
         results_NL = percentage(results_NL, year, parties, input)
         # results_NL[year] = result_NL
 
-    print(results_NL)
+    # print(results_NL)
 
     # clean manifesto data
-    # manifestos = cleanmanifestos(MANIFESTO_CSV)
+    manifestos = cleanmanifestos(MANIFESTO_CSV)
 
     # calculate left-right score for every municipality
-    # results_NL = LRscore(results_NL, manifestos)
+    LRscore(results_NL, manifestos)
 
     final_results_NL = {}
     final_results_NL["Nederland"] = results_NL
@@ -80,24 +81,42 @@ def LRscore(results_NL, manifestos):
     Calculates the weighted average of political scores
     """
 
-    for year in results_NL:
-        tot_rile = 0
-        tot_votes = 0
-        for party in results_NL[year]:
-            # calculate the weighted average of riles
-            if party in (results_NL[year] and manifestos[int(year)]):
-                tot_votes = tot_votes + results_NL[year][party]
-                tot_rile = tot_rile + results_NL[year][party] * manifestos[int(year)][party]
+    # print(results_NL)
+    # print(manifestos)
+    NL_rile = []
+    percentages = {}
+    votes = {}
 
-        results_NL[year]['rile'] = tot_rile/tot_votes
+    for year in ELECTION_YEARS:
+        percentages[year] = []
+        votes[year] = []
 
-    return results_NL
+    for party in results_NL:
+        for year in results_NL[party]:
+            if party in manifestos[int(year['year'])]:
+                # print(manifestos[int(year['year'])][party])
+                # print(year['value'])
+                percentages[year['year']].append(year['value'] * manifestos[int(year['year'])][party])
+                votes[year['year']].append(year['value'])
+
+    for year in ELECTION_YEARS:
+        if sum(votes[year]) != 0:
+            NL_rile.append({'year': year, 'value': sum(percentages[year])/sum(votes[year])})
+
+    # print(NL_rile)
+
+    with open(OUTPUT_JSON_RILE) as riles_file:
+        all_riles = json.load(riles_file)
+        all_riles[0]['Nederland'] = NL_rile
+
+    convert(all_riles, OUTPUT_JSON_RILE)
+
 
 def percentage(results_NL, year, parties, input):
     """
     Converts the amount of votes to percentages
     """
-    print(year)
+    # print(year)
     for row in range(len(input)):
         if input.loc[row, 'RegioUitslag'] == 'AantalGeldigeStemmen':
             votes = input.loc[row, 'AantalStemmen']

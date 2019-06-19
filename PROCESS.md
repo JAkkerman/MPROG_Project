@@ -18,3 +18,9 @@
 
 15-06-2019: Na veranderingen in mijn datastructuur en meer onderzoek naar de d3 line chart kan ik nu resultaten in een linechart tekenen. Dit gaat echter nog niet helemaal goed, en ik weet niet of dit ligt aan mijn data of aan JavaScript. Maandag zal ik hier naar vragen.
 Ook ga ik vandaag proberen de laatste fouten uit mijn data te halen (zoals bijvoorbeeld dat elke gemeente bij 2017 dezelfde rile krijgt, of dat sommige partijnamen niet hetzelfde zijn doorgevoerd)
+
+16-06-2019:
+
+17-06-2019: Bij de standup hebben we gekeken naar het probleem van de kleuren, en hebben we het erover gehad dat de parallel coordinates. De kleuren zijn nu opgelost, en ik heb ook het probleem opgelost dat de lijnen niet goed werden getekend. Allereerst bij de riles, die altijd ofwel stopte bij 1982 of daarna pas begon (dat is nu een doorlopende lijn) en bij de partijdata werden er rare lijnen getekend (lijnen die terug naar 2017 leken te keren), wat is opgelost door de volgorde in de arrays aan te passen.
+
+18-06-2019: Ik heb met Nigel de tooltip van de partijlijnen aan het werk gekregen en bootstrap geimplementeerd. Ook heb ik met Nigel besproken wat er met de parallel coordinates moet gebeuren, en we zijn tot de conclusie gekomen dat ik het beste nog een pie-chart kan maken met partij resultaten per jaar (wat ook overzichtelijker is dan alleen de lijnen) die met een drop-down menu kan worden aangepast. Ook ga ik de (semi-) parallel coordinates een optie geven om de absolute waarden van een gemeente te laten zien en de relatieve positie ten opzichte van de Nederlandse score. 

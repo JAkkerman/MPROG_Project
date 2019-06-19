@@ -10,26 +10,20 @@ import numpy as np
 import pandas as pd
 
 ELECTION_CSV_2017 = "Data/2017.csv"
-# ELECTION_CSV = ["Data/1946.csv", "Data/1948.csv", "Data/1952.csv", "Data/1956.csv", "Data/1959.csv",\
-#                 "Data/1963.csv", "Data/1967.csv", "Data/1971.csv", "Data/1972.csv", "Data/1977.csv",\
-#                 "Data/1981.csv", "Data/1982.csv", "Data/1986.csv", "Data/1989.csv", "Data/1994.csv",\
-#                 "Data/1998.csv", "Data/2002.csv", "Data/2003.csv", "Data/2006.csv", "Data/2010.csv",\
-#                 "Data/2012.csv"]
 ELECTION_YEARS = ["1946", "1948", "1952", "1956", "1959", "1963", "1967", "1971", "1972", "1977", "1981",\
-                  "1982", "1986", "1989", "1994", "1998", "2002", "2003", "2006", "2010", "2012"]
+                  "1982", "1986", "1989", "1994", "1998", "2002", "2003", "2006", "2010", "2012", "2017"]
 DEFAULT_CAT = ["RegioNaam", "RegioCode", "AmsterdamseCode", "OuderRegioNaam", "OuderRegioCode", "Kiesgerechtigden",\
                "Opkomst", "OngeldigeStemmen", "BlancoStemmen", "GeldigeStemmen"]
 MANIFESTO_CSV = "Data/ManProj.csv"
 OUTPUT_JSON = "data.json"
-FIRSTCOLUMN = 1
-LASTCOLUMN = 6
+OUTPUT_JSON_RILE = "data_rile.json"
 
-
-def clean(input_2017, input_rest, firstcolumn, lastcolumn):
+def clean(input_2017, input_rest):
     """
     Reads the csv file and returns the requested data
     """
-    # Data = {Aalsmeer: {1946: {CPN: 3.5%, ... , LR-score: 3.560}, ...}, ...}
+
+    # [{Aalsmeer: {VVD: {1946: 20%, ...}, ...}, ...}]
 
     # first write the data for the last election in 2017
     input = pd.read_csv(input_2017, delimiter=';')
@@ -43,10 +37,12 @@ def clean(input_2017, input_rest, firstcolumn, lastcolumn):
     parties = partylist(input)
 
     # add electoral results
-    municipalities = percentage(municipalities, 2017, parties, input)
+    # municipalities = percentage(municipalities, '2017', parties, input)
 
     # iterate over remaining elections, if a municipality is found that existed in 2017, add electoral data
     for year in ELECTION_YEARS:
+        # if year != '2017':
+            # print(year)
         input = pd.read_csv(f"Data/{year}.csv", delimiter=';')
         input.fillna(value=0.0, inplace=True)
         parties = partylist(input)
@@ -56,10 +52,10 @@ def clean(input_2017, input_rest, firstcolumn, lastcolumn):
     manifestos = cleanmanifestos(MANIFESTO_CSV)
 
     # calculate left-right score for every municipality
-    municipalities = LRscore(municipalities, manifestos)
+    LRscore(municipalities, manifestos)
 
     municipalities = [municipalities]
-    print(municipalities)
+    # print(municipalities)
     return municipalities
 
 
@@ -78,8 +74,7 @@ def cleanmanifestos(input_csv):
     for row in range(len(input)):
         if row != 0:
             manifestos[input.loc[row, 'date']][input.loc[row, 'partyname']] = input.loc[row, 'rile']
-
-    print(manifestos)
+    # print(manifestos)
     return manifestos
 
 
@@ -88,9 +83,9 @@ def partylist(input):
     Write election results to separate dictionary
     """
     parties = []
-    for category in list(input):
-        if category not in DEFAULT_CAT:
-            parties.append(category)
+    for party in list(input):
+        if party not in DEFAULT_CAT:
+            parties.append(party)
 
     return parties
 
@@ -99,44 +94,66 @@ def LRscore(municipalities, manifestos):
     Calculates the weighted average of political scores
     """
 
+    all_riles = {}
+    # iterate over all municipalities, create empty list
     for municipality in municipalities:
-        for year in municipalities[municipality]:
-            tot_rile = 0
-            tot_votes = 0
-            for party in municipalities[municipality][year]:
-                # calculate the weighted average of riles
-                if party in (municipalities[municipality][year] and manifestos[int(year)]):
-                    tot_votes = tot_votes + municipalities[municipality][year][party]
-                    tot_rile = tot_rile + municipalities[municipality][year][party] * manifestos[int(year)][party]
+        all_riles[municipality] = []
+        percentages = {}
+        votes = {}
+        for year in ELECTION_YEARS:
+            percentages[year] = []
+            votes[year] = []
 
-            municipalities[municipality][year]['rile'] = tot_rile/tot_votes
+        for party in municipalities[municipality]:
+            for data in municipalities[municipality][party]:
+                if party in manifestos[int(data['year'])]:
+                    percentages[data['year']].append(manifestos[int(data['year'])][party] * data['value'])
+                    votes[data['year']].append(data['value'])
 
-    return municipalities
+
+        for year in ELECTION_YEARS:
+            if sum(votes[year]) != 0:
+                all_riles[municipality].append({'year': year, 'value': sum(percentages[year])/sum(votes[year])})
+
+
+    convert([all_riles], 'data_rile.json')
+
 
 def percentage(municipalities, year, parties, input):
     """
     Converts the amount of votes to percentages
     """
-
+    # print(municipalities)
     for row in range(len(input)):
         if row != 0:
+            municipality = input.loc[row, 'RegioNaam']
+
             # check if the municipality existed in 2017
-            if input.loc[row, 'RegioNaam'] in municipalities:
+            if municipality in municipalities:
+                # print(municipalities[municipality])
                 votes = input.loc[row, 'GeldigeStemmen']
-                # write the results to a dictionary and append them to the year
-                results = {}
-                for category in parties:
-                    if category != parties[len(parties) - 1]:
-                        value = input.loc[row, category]
-                        if type(input.loc[row, category]) == str:
-                            value = input.loc[row, category]
-                            value = int(value.replace(',', ''))
 
-                        # add parties that got more than 1 percent of the vote
-                        if (value/votes)*100 >= 1:
-                            results[category] = (value/votes)*100
+                for party in parties:
+                    # print(party)
+                    # if party != parties[len(parties) - 1]:
+                    value = input.loc[row, party]
+                    if type(input.loc[row, party]) == str:
+                        # print(value)
+                        # print(year)
+                        value = float(value.replace(',', '0'))
 
-                municipalities[input.loc[row, 'RegioNaam']][year] = results
+                    precentage = (value/votes)*100
+
+                    # add parties that got more than 1 percent of the vote
+                    if (value/votes)*100 >= 1:
+                        if party == 'GROENLINKS':
+                            party = 'GL'
+                        # print(municipality)
+                        # if party in municipality:
+                        # print(municipalities[municipality])
+                        if party not in municipalities[municipality]:
+                            municipalities[municipality][party] = []
+                        municipalities[municipality][party].append({'year': year, 'value': (value/votes)*100})
 
     return municipalities
 
@@ -153,7 +170,7 @@ def convert(data, outputJSON):
 if __name__ == '__main__':
 
     # read data from data file
-    data = clean(ELECTION_CSV_2017, ELECTION_YEARS, FIRSTCOLUMN, LASTCOLUMN)
+    data = clean(ELECTION_CSV_2017, ELECTION_YEARS)
 
     # convert data to JSON format
     convert(data, OUTPUT_JSON)
