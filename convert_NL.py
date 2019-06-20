@@ -11,7 +11,7 @@ import pandas as pd
 # import convert
 
 ELECTION_YEARS = ["1946", "1948", "1952", "1956", "1959", "1963", "1967", "1971", "1972", "1977", "1981",\
-                  "1982", "1986", "1989", "1994", "1998", "2002", "2003", "2006", "2010", "2012"]
+                  "1982", "1986", "1989", "1994", "1998", "2002", "2003", "2006", "2010", "2012", "2017"]
 OUTPUT_JSON = "data_NL.json"
 OUTPUT_JSON_RILE = "data_rile.json"
 MANIFESTO_CSV = "Data/ManProj.csv"

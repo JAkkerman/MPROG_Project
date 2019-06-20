@@ -26,38 +26,36 @@ the Netherlands -->
   </head>
   <body>
     <div class="container">
-      <h style="font-family: arial"><b>Verschuivingen in Politieke voorkeur per gemeente (1946-2017)</b></h><br>
-      <a style="font-family: arial" href="https://www.verkiezingsuitslagen.nl/verkiezingen/">Kiesraad</a>
-      <a style="font-family: arial" href="https://manifesto-project.wzb.eu/">Manifesto Project</a>
       <div class="row">
-        <div class="col-sm-5">
+        <h style="font-family: arial"><b>Verschuivingen in Politieke voorkeur per gemeente (1946-2017)</b></h><br>
+      </div><div class="row">
+        <a style="font-family: arial" href="https://www.verkiezingsuitslagen.nl/verkiezingen/">Kiesraad</a><br>
+        <a style="font-family: arial" href="https://manifesto-project.wzb.eu/">Manifesto Project</a><br>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
           <div class="dropdown">
             <button onclick="dropDownMun()" class="dropbtn">Selecteer gemeente</button>
             <div id="dropdownmun" class="dropdown-content">
-
             </div>
           </div>
           <div id="map"></div>
-          <div class="dropdown">
-            <button onclick="dropDownPie()" class="dropbtn">Selecteer jaar</button>
-            <div id="dropdownpie" class="dropdown-content">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-            </div>
-          </div>
-          <div id="piechart"></div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div id="linechart"></div>
           <div id="chart-area">
               <form>
-                  <label><input type="radio" name="dataset" value="apples" checked>Absolute score</label>
+                  <label><input type="radio" name="dataset" value="apples" checked>Absolute score</label><br>
                   <label><input type="radio" name="dataset" value="oranges">Relatief ten opzichte van Nederland</label>
               </form>
           </div>
-
           <div id="changechart"></div>
+          <div class="dropdown">
+            <button onclick="dropDownPie()" class="dropbtn">Selecteer jaar</button>
+            <div id="dropdownpie" class="dropdown-content">
+            </div>
+          </div>
+          <div id="piechart"></div>
         </div>
       </div>
     </div>
