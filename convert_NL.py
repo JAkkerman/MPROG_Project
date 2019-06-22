@@ -93,6 +93,14 @@ def LRscore(results_NL, manifestos):
 
     for party in results_NL:
         for year in results_NL[party]:
+            if party == 'KVP':
+                party = 'Katholieke Volkspartij (KVP)'
+            elif party == 'CHU':
+                party = 'Christelijk-Historische Unie'
+            elif party == 'CPN':
+                party = 'Communistische Partij van Nederland'
+            elif party == 'ARP':
+                party = 'Anti-Revolutionaire Partij'
             if party in manifestos[int(year['year'])]:
                 # print(manifestos[int(year['year'])][party])
                 # print(year['value'])

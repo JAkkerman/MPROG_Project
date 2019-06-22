@@ -8,78 +8,46 @@ the Netherlands -->
   <head>
     <link rel="stylesheet" type="text/css" href="project.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <meta charset="utf-8">
     <title>Politieke Verschuivingen</title>
-
-    <!-- Import D3 V5 -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script>
-      d3v5 = d3;
-      window.d3 = null;
-    </script>
-
-    <script src="d3-tip.js"></script>
-    <script src="project.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
+
   <body>
+
     <div class="container">
+
       <div class="row">
-        <h style="font-family: arial"><b>Verschuivingen in Politieke voorkeur per gemeente (1946-2017)</b></h><br>
-      </div><div class="row">
-        <a style="font-family: arial" href="https://www.verkiezingsuitslagen.nl/verkiezingen/">Kiesraad</a><br>
-        <a style="font-family: arial" href="https://manifesto-project.wzb.eu/">Manifesto Project</a><br>
+
+        <div class="col-sm-12">
+          Test
+          <a href="visualization.html">Vis</a>
+        </div>
+
       </div>
+
       <div class="row">
-        <div class="col-sm-6">
-          <div class="dropdown">
-            <button onclick="dropDownMun()" class="dropbtn">Selecteer gemeente</button>
-            <div id="dropdownmun" class="dropdown-content">
-            </div>
-          </div>
-          <div id="map"></div>
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10">
+          <p>De periode na de Tweede Wereldoorlog kent grote verschuivingen in het
+          politieke landschap. Na een initiële verlinkinksing, die zijn hoogtepunt kent
+          in de jaren '60 en '70, ziet Nederland vanaf de jaren '80 een geleidelijke beweging
+          naar rechts. Deze visualisatie combineert verkiezingsdata en data over links-rechts
+          scores van partijen ten tijde van de verkiezing, om een beeld te geven van deze
+          verschuiving. U kunt de verandering voor heel Nederland zien, maar ook de verandering
+          per gemeente. De kaart hierboven geeft in kleur aan hoe links of rechts de voorkeur
+          van de desbetreffende gemeente was bij de Tweede Kamerverkiezingen van 2017. Als u op
+          een van de gemeenten klikt, of een gemeente in het menu zoekt, kunt u gedetailleerde
+          data van deze gemeente zien, en zien of deze gemeente gemiddeld linkser of rechtser
+          stemt dan de rest van Nederland.</p>
         </div>
-        <div class="col-sm-6">
-          <div id="linechart"></div>
-          <div id="chart-area">
-              <form>
-                  <label><input type="radio" name="dataset" value="apples" checked>Absolute score</label><br>
-                  <label><input type="radio" name="dataset" value="oranges">Relatief ten opzichte van Nederland</label>
-              </form>
-          </div>
-          <div id="changechart"></div>
-          <div class="dropdown">
-            <button onclick="dropDownPie()" class="dropbtn">Selecteer jaar</button>
-            <div id="dropdownpie" class="dropdown-content">
-            </div>
-          </div>
-          <div id="piechart"></div>
-        </div>
+
       </div>
+
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
   </body>
-
-  <!-- Import D3 V3 and TopoJSON -->
-  <script src="datamaps.js"></script>
-  <script src="topojson.js"></script>
-  <script src="topojson.min.js"></script>
-  <!-- <script>
-
-    var topology = topojson.topology({foo: geojson});
-
-  </script> -->
-  <script src="NL_mun_2017.geojson"></script>
-  <!-- <script src="NL_mun_2017.topojson"></script> -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script>
-      d3v3 = d3;
-      window.d3 = null;
-  </script>
 
 </html>

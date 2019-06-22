@@ -10,6 +10,13 @@
   background-color: rgb(241, 255, 175);
 }
 
+.title {
+  font-family: arial;
+  text-align: center;
+  font-size: large;
+  margin-top: 20px
+}
+
 /* #map {
   position:absolute;
   width: 40%;
