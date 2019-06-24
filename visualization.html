@@ -28,40 +28,66 @@ the Netherlands -->
     <div class="container">
 
       <div class="row">
-        <a href="index.html">Terug naar de Uitlegpagina</a>
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10">
+          <a href="index.html">Uitlegpagina</a>
+          <a href="visualization.html">Visualisatie</a>
+          <a href="casestudy.html">Case Study: PvdA</a>
+        </div>
       </div>
 
       <div class="row">
-        <h class="title"><b>Verschuivingen in Politieke voorkeur per gemeente (1946-2017)</b></h><br><br><br>
+        <div class="col-sm-12">
+          <br><br><br><h class="title"><b>Verschuivingen in Politieke voorkeur per gemeente (1946-2017)</b></h><br><br>
+        </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
-          <select class="dropdownmunoptions"></select>
-          <!-- <div class="dropdown">
-            <button onclick="dropDownMun()" class="dropbtn">Selecteer gemeente</button>
-            <div id="dropdownmun" class="dropdown-content">
-            </div>
-          </div> -->
+        <div class="col-sm-5">
+          <p>Deze kaart geeft in kleur aan hoe links of rechts de voorkeur
+            van de desbetreffende gemeente was bij de Tweede Kamerverkiezingen van 2017. Als u op
+            een van de gemeenten klikt, of een gemeente in het menu zoekt, kunt u verder op de pagina gedetailleerde
+            data van deze gemeente zien.</p>
           <div id="map"></div>
         </div>
+
+        <div class="col-sm-1">
+          <div id="placeholder"></div>
+          <div id="legendmap"></div>
+        </div>
+
         <div class="col-sm-6">
+            <div id="placeholder"></div>
             <b class="title">Verloop van politieke voorkeur:</b><br><br>
-            <button class="reset">Reset lijnen</button>
-            <div id="changechart"></div>
-            <p> Kies hier om de absolute score van deze regio over tijd te zien, of de relatieve score ten opzichte het gemiddelde van Nederland. De links-rechts-scores zijn afkomstig van <a href=https://manifesto-project.wzb.eu/"> The Manifesto Project</a>.</p>
+            <p>Kies hier om de absolute score van deze regio over tijd te zien, of de relatieve score ten opzichte het gemiddelde van Nederland.
+              De links-rechts-scores zijn afkomstig van <a href=https://manifesto-project.wzb.eu/"> The Manifesto Project</a>. Zij representeren
+              een door politicologen bepaalde score die voor elk jaar voor een set aan verkiezingsprogramma's is opgesteld. Voor meer informatie
+              over de manier van berekenen, bekijk de <a href="index.html">uitlegpagina</a>.</p>
             <div>
                 <form>
                     <label><input class="relabs" type="radio" name="dataset" value="Absolute" checked>Absolute score</label>
                     <label><input class="relabs" type="radio" name="dataset" value="Relative" >Relatief ten opzichte van Nederland</label><br>
                 </form>
             </div>
+            <button class="reset">Reset lijnen</button>
+            <div id="changechart"></div>
         </div>
       </div>
 
       <div class="row">
+
         <div class="col-sm-1"></div>
-        <h><b class="title">Data per regio:</b></h><br><br>
+
+        <div class="col-sm-3">
+          <h><b class="title">Data voor de regio:</b></h><br><br>
+          <select class="dropdownmunoptions"></select><br><br>
+        </div>
+
+        <div class="col-sm-3">
+          <p id="regionName"></p>
+        </div>
+
       </div>
 
       <div class="row">
@@ -83,16 +109,12 @@ the Netherlands -->
           <div id="linechart"></div>
         </div>
 
-        <div class="col-sm-1"></div>
-
         <div class="col-sm-3">
           <div class="dropdown">
             <select class="dropdownpieoptions"></select>
           </div>
           <div id="piechart"></div>
         </div>
-
-        <div class="col-sm-1"></div>
       </div>
 
       <div class="row">
@@ -103,7 +125,7 @@ the Netherlands -->
           <p>Deze grafiek geeft de verkiezingsuitslagen van alle partijen die bij Tweede Kamerverkiezingen meer dan 1 procent van de stemmen hebben gekregen weer over een periode van 1946 tot 2017. Data is afkomstig van <a href="https://www.verkiezingsuitslagen.nl/verkiezingen/">de Kiesraad</a>.</p>
         </div>
 
-        <div class="col-sm-1"></div>
+        <!-- <div class="col-sm-1"></div> -->
 
         <div class="col-sm-4">
           <p>Deze grafiek geeft de uitslag van alle partijen in een bepaald gedetailleerd weer. Klik op het menu om een jaar te selecteren.

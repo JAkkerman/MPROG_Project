@@ -11,6 +11,7 @@ the Netherlands -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <meta charset="utf-8">
     <title>Politieke Verschuivingen</title>
+
   </head>
 
   <body>
@@ -19,9 +20,12 @@ the Netherlands -->
 
       <div class="row">
 
-        <div class="col-sm-12">
-          Test
-          <a href="visualization.html">Vis</a>
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10">
+          <a href="index.html">Uitlegpagina</a>
+          <a href="visualization.html">Visualisatie</a>
+          <a href="casestudy.html">Case Study: PvdA</a>
         </div>
 
       </div>
@@ -31,17 +35,62 @@ the Netherlands -->
         <div class="col-sm-1"></div>
 
         <div class="col-sm-10">
-          <p>De periode na de Tweede Wereldoorlog kent grote verschuivingen in het
-          politieke landschap. Na een initiële verlinkinksing, die zijn hoogtepunt kent
-          in de jaren '60 en '70, ziet Nederland vanaf de jaren '80 een geleidelijke beweging
-          naar rechts. Deze visualisatie combineert verkiezingsdata en data over links-rechts
-          scores van partijen ten tijde van de verkiezing, om een beeld te geven van deze
-          verschuiving. U kunt de verandering voor heel Nederland zien, maar ook de verandering
-          per gemeente. De kaart hierboven geeft in kleur aan hoe links of rechts de voorkeur
-          van de desbetreffende gemeente was bij de Tweede Kamerverkiezingen van 2017. Als u op
-          een van de gemeenten klikt, of een gemeente in het menu zoekt, kunt u gedetailleerde
-          data van deze gemeente zien, en zien of deze gemeente gemiddeld linkser of rechtser
-          stemt dan de rest van Nederland.</p>
+          <p>
+            De periode na de Tweede Wereldoorlog kent grote verschuivingen in het
+            politieke landschap. Na een initiële verlinksing, die zijn hoogtepunt kent
+            in de jaren '60 en '70, ziet Nederland vanaf de jaren '80 een geleidelijke beweging
+            naar rechts. Deze visualisatie combineert verkiezingsdata en data over links-rechts
+            scores van partijen ten tijde van de verkiezing, om een beeld te geven van deze
+            verschuiving. U kunt de verandering voor heel Nederland zien, maar ook de verandering
+            per gemeente.
+          </p>
+
+          <p>
+            Om te bepalen hoe links of rechts een gemeente over de tijd heeft gestemd, is gebruik gemaakt
+            van de scores van de <a href="https://manifesto-project.wzb.eu/">Manifesto Project</a>.
+            Zij hebben een database van verschillende landen met scores van de grootste partijen voor meerdere jaren.
+            Deze scores, of 'riles', geven weer hoe links of rechts hun verkiezingsprogramma was in een bepaald jaar. Lees meer over
+            hun methodiek op de <a href="https://manifesto-project.wzb.eu/information/documents/information">website</a> van the Manifesto Project.
+          </p>
+
+          <p>
+            De gebruikte verkiezingsdata is afkomstig van de <a href="https://www.verkiezingsuitslagen.nl/verkiezingen/">Kiesraad</a>. Hiervoor
+            is data gebruikt voor heel Nederland en alle gemeenten die in 2017 bestonden. Gemeenten die voor 2017 zijn gefusseerd zijn dus niet
+            meegenomen in de analyse. Als gemeenten na 1946 zijn onstaan, is alleen data vanaf het moment van oprichting beschikbaar. De resultaten
+            voor alle partijen in een gemeente zijn als lijngrafiek te zien, en per jaar te zien als taartdiagram.
+          </p>
+
+          <p>
+            Per gemeente, of voor heel Nederland, is ook het verloop van de links-rechts score te zien. Om deze te berekenen is voor alle partijen
+            binnen een gemeente die meer dan één procent van de stemmen hebben én waarvan de rile door het Manifesto Project is berekend, een gewogen
+            rile berekend. Dit betekend dat de som wordt genomen van het product van scores van de partijen keer en de percentages van de partijen,
+            en deze wordt gedeeld door de som van de percentages die zijn meegenomen in de berekening. De formule is als volgt:
+          </p>
+
+          <a target="_blank"><img src="https://latex.codecogs.com/gif.latex?gewogen&space;\&space;rile&space;\&space;gemeente&space;=&space;\frac{\sum_{i=0}^n&space;((rile&space;\&space;partij)_i&space;\cdot&space;(percentage&space;\&space;partij)_i)}{\sum_{i=0}^n&space;(percentage&space;\&space;partij)_i}" title="gewogen \ rile \ gemeente = \frac{\sum_{i=0}^n ((rile \ partij)_i \cdot (percentage \ partij)_i)}{\sum_{i=0}^n (percentage \ partij)_i}" /></a>
+
+          <p>
+            <br>
+            Hierbij moet worden opgemerkt dat het Manifesto Project alleen scores heeft opgesteld van grotere partijen. In de praktijk zal dit weinig
+            uitmaken, aangezien de partijen die in de meeste gemeenten meer dan één procent van de stemmen hebben gekregen vaak ook een score hebben
+            van het Manifesto Project*. De ontwikkeling van de gewogen rile wordt over de tijd getoond, waarbij gekozen kan worden om de absolute gewogen rile te zien,
+            of de relatieve score ten opzichte van Nederland. Deze relatieve score is de score van de geselecteerde gemeente min de Nederlandse score, waardoor
+            te zien is of deze gemeente door de tijd heen linkser of rechtser stemde dan het gemiddelde in Nederland.
+          </p>
+
+          <p>
+            Een tweede kanttekening is dat variaties in de gewogen rile niet alleen afhangen van verandering in stemgedrag, maar ook van de verandering
+            van de oriëntatie van de partijen zelf. Als een partij met een negatieve rile (ofwel, een linkse partij) hetzelfde percentage stemmen behoudt
+            maar de rile naar 0 beweegt (ofwel, de partij wordt rechtser in haar standpunten), dan levert dit alsnog een netto verrechtsing van de gewogen rile op.
+            Dit betekent dat de verschuiving van politieke voorkeur niet alleen afhangt van op welke partij mensen stemmen, maar ook hoe deze partijen zich
+            relatief positioneren in het politieke spectrum.
+          </p>
+
+          <p>
+            <i>*Een uitzondering is de SGP, waarvoor in de periode 1948-1981 geen riles beschikbaar waren. Dit gaf een dusdanig vertekend beeld
+            in gemeenten waar de SGP een groot percentage van de stemmen krijgt, dat is gekozen om voor de ontbrekende jaren de rile van 1948 te gebruiken.</i>
+          </p>
+
         </div>
 
       </div>

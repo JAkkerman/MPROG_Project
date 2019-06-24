@@ -1,0 +1,126 @@
+<!-- Joos Akkerman (11304723)
+MPROG Project
+This file visualizes three graphs that are linked, and visualize changes in political preferences in
+the Netherlands -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="project.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <title>Politieke Verschuivingen</title>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+      d3v5 = d3;
+      window.d3 = null;
+    </script>
+
+    <script src="drawrilePvdA.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10">
+          <a href="index.html">Uitlegpagina</a>
+          <a href="visualization.html">Visualisatie</a>
+          <a href="casestudy.html">Case Study: PvdA</a>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10">
+
+          <p>
+            De Partij van de Arbeid (PvdA) levert een interessant beeld van de ontwikkelingen in de Nederlandse politiek en geeft een beter
+            inzicht in wat de data representeert. Dit is te verklaren door:
+            <li>De PvdA doet sinds 1946 elk jaar mee aan de Tweede Kamerverkiezingen</li>
+            <li>De PvdA is in deze periode vrijwel altijd de grootste of tweede partij, en heeft daarmee een significante invloed op de
+              gewogen rile </li>
+            <li>De PvdA kent in zijn geschiedenis vrij sterke schommelingen in haar rile, die zijn te verklaren vanuit de verschuivingen in
+              algemene politieke voorkeur</li>
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-1"></div>
+
+        <div class="col-sm-10">
+
+          <div id="linechart"></div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <!-- <div class="col-sm-2"></div> -->
+
+        <div class="col-sm-4">
+          <img src="Img/Drees.jpg" width="200px">
+          <p>
+            De jaren '50 en vroege jaren '60 kenmerken zich door de wederopbouw en de opbouw van de verzorgingstaat. In deze periode is de PvdA
+            redelijk gematigd, maar wel de meest linkse van de grote partijen. Zij is een fusiepartij van de vooroorlogse SDAP, VDB en CDU, en is
+            opgericht als brede linkse partij. In deze periode zijn de kabinetten <a href="https://www.parlement.com/id/vg09ll01jztw/w_willem_drees">Drees</a>,
+            die de basis leggen voor de Nederlandse verzorgingstaat met onder andere de invoer van de AOW. In de jaren '60 lijkt er een conflict
+            binnen de partij te ontstaan tussen de voor- en naoorlogse generatie. Als Joop den Uyl de leiding van de partij overneemt in 1967 lijkt
+            de linksere koers vast te staan, wat leidt tot de afsplitsing van <a href="https://www.parlement.com/id/vh8lnhrp8wth/democratisch_socialisten_1970_ds_70">DS'70</a>,
+            onder leiding van de zoon van Willem Drees. Drees zelf stapt overigens ook uit de partij, uit onvrede over de linkse koers.
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <img src="Img/DenUyl.jpg" width="200px">
+          <p>
+            De Late jaren '60 en jaren '70 worden gekenmerkt door sociale veranderingen, de tweede feministische golf en in het algemeen een sterke
+            verlinksing van het politieke landschap. Ook binnen de PvdA is dit merkbaar. Dit wordt gekenmerkt door de opkomst van <a href="https://nl.wikipedia.org/wiki/Nieuw_Links_(PvdA)">Nieuw Links</a>,
+            een radicaal linkse vernieuwingsbeweging binnen de PvdA. Ook mag de PvdA onder <a href="https://www.parlement.com/id/vg09llb6zoz6/j_m_joop_den_uyl">Joop den Uyl</a>
+            het meest linkse kabinet uit de Nederlandse geschiedenis (1973-1977) leiden. Deze linkse koers is terug te zien aan de riles in
+            deze periode, die hun laagste (oftwel meest linkse) waarde bereiken. Deze linkse periode kent ook recessie, deels veroorzaakt
+            door de <a href="https://nl.wikipedia.org/wiki/Oliecrisis_van_1973">oliecrisis</a>. Die recessie luidt een periode van bezuinigingen
+            en een kleinere rol voor de overheid in, die ook de PvdA beïnvloed, getuige de snelle verrechtsing van de koers.
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <img src="Img/Kok.jpg" width="200px">
+          <p>
+            In 1994 mag de PvdA voor het eerst sinds 1977 weer de premier leveren, <a href="https://www.parlement.com/id/vg09lloazsxv/w_wim_kok">Wim Kok</a>.
+            Echter, de koers van de partij is in die periode ingrijpend veranderd. Zoals te zien in het verloop van de riles is de partij sterk naar het
+            midden en zelfs naar rechts opgeschoven, gesymboliseerd in Kok's beroemde speech over het <a href="https://www.volkskrant.nl/nieuws-achtergrond/het-afschudden-van-ideologische-veren-is-voor-een-politieke-partij-ook-een-bevrijdende-ervaring-pvda-moet-van-kok-naar-het-politieke-midden~b8d213a6/".>'Afschudden van de ideologische veren'</a>.
+            De periode kenmerkt zich door grote economische voorspoed en de grootschalige privatisering van vele voormalige overheidsdiensten.
+            De paarse kabinetten (PvdA, VVD en D66) kennen niet langer de grote ideologische tegenstellingen uit de jaren '70. Ondanks
+            dat het economisch goed gaat met Nederland, lijkt het contact met de achterban te zijn kwijtgeraakt. Dit resulteerde in de opkomst van
+            populisten als Pim Fortuyn, en de electorale afbrokkeling van de PvdA.
+          </p>
+        </div>
+
+
+
+      </div>
+
+
+    </div>
+
+  </body>
+
+</html>

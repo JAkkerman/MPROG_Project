@@ -7,7 +7,7 @@
 }
 
 .container {
-  background-color: rgb(241, 255, 175);
+  background-color: rgb(229, 255, 160);
 }
 
 .title {
@@ -93,3 +93,18 @@
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
+
+#placeholder {
+  margin-top: 100px;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+p {
+  text-align: justify;
+}

@@ -44,6 +44,7 @@ d3v5.json('data.json').then(function(data) {
       // draw map and first change chart
       drawMap(data, data_riles, lineScales[0], lineScales[1], lineScales[2], paryScale);
       drawChangeChartAbs(data_riles[0]['Nederland'], 'Nederland', lineScales[0], paryScale);
+      mapLegend(lineScales[2]);
       // drawChangeChartRel(data_riles[0]['Nederland'], data_riles[0]['Nederland'], 'Nederland', parScales[0], parScales[1]);
 
       // set options for dropdown
@@ -51,7 +52,7 @@ d3v5.json('data.json').then(function(data) {
 
       // draw first line chart and pie chart
       drawLineChart(data_NL[0]['Nederland'], lineScales[1]);
-      drawPieChart();
+      drawPieChart(data_NL[0]['Nederland'], 2017);
       partyLegend();
       drawPieChart.updatePie(data_NL[0]['Nederland'], 2017)
       dropDownPieOptions(data_NL[0]['Nederland'], 'Nederland');
@@ -62,14 +63,24 @@ d3v5.json('data.json').then(function(data) {
       d3v5.select(".dropdownmunoptions").on("change", function() {
         mun = this.value;
         drawLineChart(data[0][mun], lineScales[1]);
-        dropDownPieOptions(data, name);
+        dropDownPieOptions(data[0][mun], mun);
         drawChangeChartAbs(data_riles[0][mun], mun, lineScales[0], paryScale);
         drawMap.updateText(mun);
+        if (mun == "Nederland") {
+          drawPieChart.updatePie(data_NL[0]["Nederland"], 2017);
+        } else {
+          drawPieChart.updatePie(data[0][mun], 2017);
+        }
       });
 
       // update pie chart if different year is selected
       d3v5.select(".dropdownpieoptions").on("change", function() {
-        drawPieChart.updatePie(data[0][mun], this.value);
+        if (mun == "Nederland") {
+          drawPieChart.updatePie(data_NL[0]["Nederland"], this.value);
+        } else {
+          drawPieChart.updatePie(data[0][mun], this.value);
+        }
+
       })
 
       d3v5.select(".reset").on("click", function() {
@@ -103,10 +114,6 @@ function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale
   d3v5.json("NL_mun_2017.geojson").then(function(mun) {
 
     drawMap.updateText = updateText;
-  // if (error) throw error;
-    // console.log(mun);
-
-    // var municipalities = topojson.feature(mun, mun.objects.Gemeenten_Bestuurlijke_Grenzen_2017).features
 
     var projection = d3v5.geoMercator()
                          .scale(5500)
@@ -154,6 +161,7 @@ function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale
        .on("mouseover", tip.show)
        .on("mouseout", tip.hide)
        .on("click", function(d) {
+         // updateRegionName(d.properties.Gemeentenaam);
          drawLineChart(data[0][d.properties.Gemeentenaam], lineyScale);
          if (changeMethod == "Abs") {
            drawChangeChartAbs(data_riles[0][d.properties.Gemeentenaam], d.properties.Gemeentenaam, linexScale, paryScale);
@@ -175,11 +183,21 @@ function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale
    });
 
    function updateText(name) {
-     console.log("yeet");
-     text = svg.select("#regionName")
-     text.text(name)
+     // console.log("yeet");
+     // text = svg.select("#regionName")
+     // text.text(name)
    };
 };
+
+function updateRegionName (mun) {
+  /* updates name of selected region */
+
+  d3v5.selectAll("#regionName").remove()
+  d3v5.append("text")
+     .attr("id", "regionName")
+     .text(mun)
+     .attr("y", "30")
+}
 
 
 function lineScale(start_w, end_w, start_h, end_h) {
@@ -200,8 +218,8 @@ function lineScale(start_w, end_w, start_h, end_h) {
                    .range([line_end_h - line_start_h, line_start_h]);
 
   var colorScale = d3v5.scaleLinear()
-                       .domain([-15,15])
-                       .range(["#ff0000", "#1d00ff"]);
+                       .domain([-10,10])
+                       .range(["#ff0000", "#00c3ff"]);
 
   return [xScale, yScale, colorScale];
 };
@@ -286,8 +304,7 @@ function drawAxes(xScale, yScale, type) {
 
 
 function drawLineChart(data, yScale) {
-
-  // console.log(data['Partij van de Arbeid (P.v.d.A.)'][0]['year']);
+/* draws line chart showing election results over time */
 
   existYears = []
   max_val = 50;
@@ -380,6 +397,71 @@ function drawLineChart(data, yScale) {
 
 };
 
+
+function mapLegend(colorScale) {
+/* Creates a legend showing colors on the map
+   based on http://bl.ocks.org/syntagmatic/e8ccca52559796be775553b467593a9f */
+
+var legendheight = 200,
+    legendwidth = 80,
+    margin = {top: 10, right: 60, bottom: 10, left: 2};
+
+var canvas = d3v5.select("#legendmap")
+                 .style("height", legendheight + "px")
+                 .style("width", legendwidth + "px")
+                 .style("position", "relative")
+                 .append("canvas")
+                 .attr("height", legendheight - margin.top - margin.bottom)
+                 .attr("width", 1)
+                 .style("height", (legendheight - margin.top - margin.bottom) + "px")
+                 .style("width", (legendwidth - margin.left - margin.right) + "px")
+                 .style("border", "1px solid #000")
+                 .style("position", "absolute")
+                 .style("top", (margin.top) + "px")
+                 .style("left", (margin.left) + "px")
+                 .node();
+
+  var ctx = canvas.getContext("2d");
+
+  var legendscale = d3v5.scaleLinear()
+                        .range([1, legendheight - margin.top - margin.bottom])
+                        .domain(colorScale.domain());
+
+  var legendScaleText = d3v5.scaleOrdinal()
+                            .range([1, legendheight - margin.top - margin.bottom])
+                            .domain(["Links", "Rechts"]);
+
+  var image = ctx.createImageData(1, legendheight);
+  d3v5.range(legendheight).forEach(function(i) {
+    var c = d3v5.rgb(colorScale(legendscale.invert(i)));
+    image.data[4*i] = c.r;
+    image.data[4*i + 1] = c.g;
+    image.data[4*i + 2] = c.b;
+    image.data[4*i + 3] = 255;
+  });
+  ctx.putImageData(image, 0, 0);
+
+  var legendaxis = d3v5.axisRight()
+                       .scale(legendScaleText)
+                       .tickSize(6)
+                       .ticks(2);
+
+  var svg = d3v5.select("#legendmap")
+                .append("svg")
+                .attr("height", (legendheight) + "px")
+                .attr("width", (legendwidth) + "px")
+                .style("position", "absolute")
+                .style("left", "0px")
+                .style("top", "0px")
+
+  svg.append("g")
+     .attr("class", "axis")
+     .attr("transform", "translate(" + (legendwidth - margin.left - margin.right + 3) + "," + (margin.top) + ")")
+     .call(legendaxis);
+
+};
+
+
 function partyLegend() {
   /* Creates a legend showing the party colors, used and changed code from https://stackoverflow.com/questions/42009622/how-to-create-a-horizontal-legend */
 
@@ -390,10 +472,6 @@ function partyLegend() {
                 .attr("id", "legendparties")
                 .attr("width", legendWidth)
                 .attr("height", legendHeight);
-
-  // var color = d3.scale.category10();
-  //
-  //
 
   var legend = svg.selectAll(".legend")
                 	.data(partyAbrev)
@@ -429,7 +507,6 @@ function drawChangeChartAbs(data, mun, xScale, yScale) {
                    return xScale(parseInt(d.year));
                  })
                  .y(function(d) {
-                   // console.log(d.value);
                    return yScale(d.value) + line_start_h;
                  });
 
@@ -505,20 +582,10 @@ function drawChangeChartRel(data, mun, xScale, yScale) {
 };
 
 
-function drawPieChart() {
+function drawPieChart(data, year) {
   /* draws a pie chart */
 
-  // d3v5.select(".piechart").remove();
-    // d3v5.selectAll(".piepiece").remove();
-
-    // var results = {}
-    // for (party in data) {
-    //       data[party].forEach(function(d) {
-    //         if (d['year'] == year) {
-    //           results[party] = d['value']
-    //         }
-    //       })
-    // };
+    drawPieChart.updatePie = updatePie;
 
     let svg = d3v5.select("#piechart")
                   .append("svg")
@@ -528,39 +595,52 @@ function drawPieChart() {
                   .append("g")
                       .attr("transform", `translate(${pieWidth / 2}, ${pieHeight / 2})`);
 
-    drawPieChart.updatePie = updatePie;
+    let pie = d3v5.pie()
+                  .value(function(d) {return d.value;});
 
+    var radius = Math.min(pieWidth, pieHeight) / 2 - pieMargin;
 
+    let arc = d3v5.arc()
+                  .innerRadius(0)
+                  .outerRadius(radius)
 
-    // const color = d3v5.scaleOrdinal(["#66c2a5","#fc8d62","#8da0cb",
-    //                                 "#e78ac3","#a6d854","#ffd92f"]);
+    var results = {}
+    for (party in data) {
+      data[party].forEach(function(d) {
+        if (d['year'] == year) {
+          results[party] = d['value']
+        }
+      })
+    };
 
-    // var pie = d3v5.pie()
-    //               .value(function(d) {return d.value;});
-    //
-    // var pie_data = pie(d3v5.entries(results));
+    var pie_data = pie(d3v5.entries(results));
 
-    // var radius = Math.min(pieWidth, pieHeight) / 2 - pieMargin;
-    //
-    // svg.call(pieTip);
-    //
-    // var arc = d3v5.arc()
-    //               .innerRadius(0)
-    //               .outerRadius(radius)
+    let path = svg.selectAll("path")
+                  .data(pie_data)
 
-    // var path = svg.selectAll("path")
-    //               .data(pie_data)
-    //               .enter()
-    //               .append("path")
-    //               .attr("id", function(d) {
-    //                 return d.data.key;
-    //               })
-    //               .attr("d", arc)
-    //               .attr("fill", function(d) {
-    //                 return partyColor(d.data.key);
-    //               })
-    //               .on("mouseover", pieTip.show)
-    //               .on("mouseout", pieTip.hide);
+    var pieTip = d3v5.tip()
+                     .attr('class', 'd3-tip')
+                     .offset([-10, 0])
+                     .html(function(d) {
+                       return "<strong>" + this.id + "</strong>";
+                     });
+
+    svg.call(pieTip);
+
+    path.enter()
+        .append("path")
+        .attr("fill", function(d) {
+          return partyColor(d.data.key);
+        })
+        .attr("class", "piepiece")
+        .attr("id", function(d) {
+          return d.data.key;
+        })
+        .attr("d", arc)
+        .on("mouseover", pieTip.show)
+        .on("mouseout", pieTip.hide)
+        .each(function(d) { this._current = d; });
+
 
     function updatePie(data, year) {
 
@@ -573,51 +653,21 @@ function drawPieChart() {
         })
       };
 
-
-      // var svg = d3v5.select(".piechart")
-
-      var pie = d3v5.pie()
-                    .value(function(d) {return d.value;});
-
-      var pie_data = pie(d3v5.entries(results));
-
-      let path = svg.selectAll("path")
-                    .data(pie_data)
-
-      path.exit()
-          .remove();
-
-      var pieTip = d3v5.tip()
-                       .attr('class', 'd3-tip')
-                       .offset([-10, 0])
-                       .html(function(d) {
-                         return "<strong>" + this.id + "</strong>";
-                       });
-
-
-      var radius = Math.min(pieWidth, pieHeight) / 2 - pieMargin;
-
-      svg.call(pieTip);
-
-      var arc = d3v5.arc()
-                    .innerRadius(0)
-                    .outerRadius(radius)
-
-
-      path.enter()
-          // .data(pie_data)
-          .append("path")
-          // .attr("transform", "translate(" + (pieWidth / 2) + "," + (radius) + ")")
+      d3v5.selectAll(".piepiece").data(pie(d3v5.entries(results)))
+          .attr("fill", function(d) {
+            return partyColor(d.data.key);
+          })
+          .attr("class", "piepiece")
           .attr("id", function(d) {
             return d.data.key;
           })
           .attr("d", arc)
-          .attr("fill", function(d) {
-            return partyColor(d.data.key);
-          })
           .on("mouseover", pieTip.show)
           .on("mouseout", pieTip.hide)
           .each(function(d) { this._current = d; });
+
+        path.exit()
+            .remove();
 
     }
 
@@ -699,6 +749,8 @@ function dropDownPie() {
 function dropDownPieOptions(data, name) {
 /* sets options for drop down menu pie chart */
 
+  d3v5.selectAll("#pieyear").remove();
+
   for (var key in data['Partij van de Arbeid (P.v.d.A.)']) {
 
     year = data['Partij van de Arbeid (P.v.d.A.)'][key]['year']
@@ -709,12 +761,6 @@ function dropDownPieOptions(data, name) {
         .attr("name", name)
         .attr("value", year)
         .attr("selected", function() {if (year == 2017) {return "selected"}})
-        // .on("click", function() {
-        //   console.log('Yeeta');
-        //   var year = d3v5.select(".dropdownmunoptions").node().value
-        //   console.log(year);
-        //   drawPieChart.updatePie(year);
-        // })
         .text(year)
 
   }
