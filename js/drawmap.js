@@ -53,6 +53,7 @@ function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale
        .on("click", function(d) {
          // updateRegionName(d.properties.Gemeentenaam);
          drawLineChart(data[0][d.properties.Gemeentenaam], lineyScale);
+         console.log(changeMethod);
          if (changeMethod == "Abs") {
            drawRileChartAbs(data_riles[0][d.properties.Gemeentenaam], d.properties.Gemeentenaam, linexScale, paryScale);
          } else {

@@ -35,4 +35,4 @@ Ook ga ik vandaag proberen de laatste fouten uit mijn data te halen (zoals bijvo
 
 24-06-2019: Ik heb vandaag met name gewerkt aan de update functie, die nog steeds een aantal mankementen vertoond. Ook heb ik twee uitleggende pagina's bijgevoegd, die het verhalende aspect van de visualisatie moeten vormen. Ook heb ik op de pagina een aantal uitleggende teksten toegevoegd en links naar de bronnen toegevoegd.
 
-25-06-2019: Vandaag heb ik met hulp van Nigel de update-functie van de pie chart aan het werk gekregen.  
+25-06-2019: Vandaag heb ik met hulp van Nigel de update-functie van de pie chart aan het werk gekregen. Ook heb ik de functies in aparte files opgesplitst en in verschillende files toegevoegd.  

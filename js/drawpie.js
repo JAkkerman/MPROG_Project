@@ -94,9 +94,7 @@ function drawPieChart(data, year) {
                .attr("id", function(d) {
                  return d.data.key;
                })
-               .attr("d", arc)
-               .on("mouseover", pieTip.show)
-               .on("mouseout", pieTip.hide);
+               .attr("d", arc);
 
       piepieces.exit().remove();
     }

@@ -3,10 +3,11 @@
 // This file visualizes the development of the rile a selected region
 
 function drawRileChartAbs(data, mun, xScale, yScale) {
+  /* draws the absolute rile chart */
 
-  svg = d3v5.select(".changechart")
+  svg = d3v5.select(".changechart");
 
-  d3v5.selectAll(".relline").remove()
+  d3v5.selectAll(".relline").remove();
 
   var line = d3v5.line()
                  .x(function(d) {
@@ -25,43 +26,38 @@ function drawRileChartAbs(data, mun, xScale, yScale) {
        if (mun == "Nederland") {
          return "3px";
        } else {
-         return "1.5px"
+         return "1.5px";
        }
      })
      .attr("stroke", function() {
        if (mun == "Nederland") {
          return "#ff0000";
        } else {
-         return "#1d00ff"
+         return "#1d00ff";
        }
      });
-
-  function updateLine(data) {
-    // console.log(data);
-  }
 };
 
 
 function drawRileChartRel(data, mun, xScale, yScale) {
+  /* draws the relative rile chart */
 
-  svg = d3v5.select(".changechart")
+  svg = d3v5.select(".changechart");
 
-  svg.selectAll(".absline").remove()
+  svg.selectAll(".absline").remove();
 
   var line = d3v5.line()
                  .x(function(d) {
                    return xScale(parseInt(d.year));
                  })
                  .y(function(d) {
-                   var rile_NL = 0
+                   // calculate the rile relative to the rile of the Netherlands
+                   var rile_NL = 0;
                    data['Nederland'].forEach(function(e) {
-                     console.log(e);
-                     console.log("yeet");
                      if (e.year == d.year) {
-                        rile_NL = e.value
+                        rile_NL = e.value;
                      }
                    })
-                   console.log(d.value - rile_NL);
                    return yScale(d.value - rile_NL) + line_start_h;
                  });
 
@@ -74,15 +70,14 @@ function drawRileChartRel(data, mun, xScale, yScale) {
        if (mun == "Nederland") {
          return "3px";
        } else {
-         return "1.5px"
+         return "1.5px";
        }
      })
      .attr("stroke", function() {
        if (mun == "Nederland") {
          return "#ff0000";
        } else {
-         return "#1d00ff"
+         return "#1d00ff";
        }
      });
-
 };

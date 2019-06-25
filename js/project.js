@@ -66,15 +66,24 @@ d3v5.json('data.json').then(function(data) {
         mun = this.value;
 
         if (mun == "Nederland") {
+          // drawLineChart.updateLine(data_NL[0]["Nederland"]);
           drawLineChart(data_NL[0]["Nederland"]);
           dropDownPieOptions(data_NL[0]["Nederland"], "Nederland");
-          drawRileChartAbs(data_riles[0]["Nederland"], "Nederland", xScale, yScaleRile);
+          if (changeMethod == "Abs") {
+            drawRileChartAbs(data_riles[0]["Nederland"], "Nederland", xScale, yScaleRile);
+          } else {
+            drawRileChartRel(data_riles[0], "Nederland", xScale, yScaleRile);
+          };
           drawMap.updateText("Nederland");
           drawPieChart.updatePie(data_NL[0]["Nederland"], 2017);
         } else {
           drawLineChart(data[0][mun]);
           dropDownPieOptions(data[0][mun], mun);
-          drawRileChartAbs(data_riles[0][mun], mun, xScale, yScaleRile);
+          if (changeMethod == "Abs") {
+            drawRileChartAbs(data_riles[0][mun], mun, xScale, yScaleRile);
+          } else {
+            drawRileChartRel(data_riles[0], "Nederland", xScale, yScaleRile);
+          };
           drawMap.updateText(mun);
           drawPieChart.updatePie(data[0][mun], 2017);
         }
@@ -93,20 +102,20 @@ d3v5.json('data.json').then(function(data) {
       d3v5.select(".reset").on("click", function() {
         if (changeMethod == "Abs") {
           d3v5.selectAll(".absline").remove();
-          drawRileChartAbs(data_riles[0][mun], mun, xScale, lineScale[2]);
+          drawRileChartAbs(data_riles[0]["Nederland"], mun, xScale, yScaleRile);
         } else {
           d3v5.selectAll(".relline").remove();
-          drawRileChartRel(data_riles[0], mun, xScale, lineScale[2]);
+          drawRileChartRel(data_riles[0], mun, xScale, yScaleRile);
         }
       })
 
       // update left-right line if radio button is changed
       d3v5.selectAll(".relabs").on("change", function() {
         if (this.value == "Relative") {
-          drawRileChartRel(data_riles[0][mun], mun, xScale, lineScale[2]);
+          drawRileChartRel(data_riles[0], mun, xScale, yScaleRile);
           changeMethod = "Rel"
         } else {
-          drawRileChartAbs(data_riles[0][mun], mun, xScale, lineScale[2]);
+          drawRileChartAbs(data_riles[0]['Nederland'], mun, xScale, yScaleRile);
           changeMethod = "Abs"
         };
       })

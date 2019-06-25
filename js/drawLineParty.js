@@ -9,12 +9,12 @@ function drawLineChart(data) {
   drawLineChart.updateLine = updateLine;
 
   axes = updateAxes(data)
-  xScale = axes[0]
-  yScale = axes[1]
+  let xScale = axes[0]
+  let yScale = axes[1]
   xAxis = axes[2]
   yAxis = axes[3]
 
-  svg = d3v5.select(".linechart")
+  let svg = d3v5.select(".linechart")
 
   svg.select(".xAxis").remove();
   svg.select(".yAxis").remove();
@@ -107,11 +107,47 @@ function drawLineChart(data) {
     return [xScale, yScale, xAxis, yAxis]
   }
 
-  function updateLine(data) {
-    // console.log(data);
-  }
 
+  function updateLine(data) {
+    /* updates line chart */
+
+    var lineData = [], party;
+
+    for (var type in data) {
+        party = {};
+        party.party = type;
+        party.years = data[type];
+        lineData.push(party);
+    }
+
+    var line = d3v5.line()
+                   .x(function(d) {
+                     return xScale(parseInt(d.year));
+                   })
+                   .y(function(d) {
+                     return yScale(d.value) + line_start_h;
+                   });
+
+    var newLines = svg.selectAll(".line")
+                      .data(lineData);
+
+    console.log(lineData);
+
+    newLines.enter()
+            .append("path")
+            .attr("class", "line")
+            .merge(newLines)
+            .attr("id", d.party)
+            .attr("d", line(d.years))
+            .attr("fill", "none")
+            .attr("stroke-width", "2.5px")
+            .attr("stroke", partyColor(d.party));
+
+    newLines.exit().remove();
+  }
 };
+
+
 function dropDownMunOptions(data, data_riles) {
 /* sets options for drop down menu municipalities */
 
