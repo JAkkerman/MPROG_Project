@@ -20,7 +20,6 @@ the Netherlands -->
 
     <script src="d3-tip.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script src="js/project.js"></script>
@@ -53,10 +52,12 @@ the Netherlands -->
 
       <div class="row">
         <div class="col-sm-5">
-          <p>Deze kaart geeft in kleur aan hoe links of rechts de voorkeur
+          <p>
+            Deze kaart geeft in kleur aan hoe links of rechts de voorkeur
             van de desbetreffende gemeente was bij de Tweede Kamerverkiezingen van 2017. Als u op
             een van de gemeenten klikt, of een gemeente in het menu zoekt, kunt u verder op de pagina gedetailleerde
-            data van deze gemeente zien.</p>
+            data van deze gemeente zien.
+          </p>
           <div id="map"></div>
         </div>
 
@@ -67,18 +68,24 @@ the Netherlands -->
 
         <div class="col-sm-6">
             <b class="title">Verloop van politieke voorkeur:</b><br><br>
-            <p>Kies hier om de absolute score van deze regio over tijd te zien, of de relatieve score ten opzichte het gemiddelde van Nederland.
+            <p>
+              Kies hier om de absolute score van deze regio over tijd te zien, of de relatieve score ten opzichte het gemiddelde van Nederland.
               De links-rechts-scores zijn afkomstig van <a href=https://manifesto-project.wzb.eu/"> The Manifesto Project</a>. Zij representeren
               een door politicologen bepaalde score die voor elk jaar voor een set aan verkiezingsprogramma's is opgesteld. Voor meer informatie
-              over de manier van berekenen, bekijk de <a href="index.html">uitlegpagina</a>.</p>
+              over de manier van berekenen, bekijk de <a href="index.html">uitlegpagina</a>.
+            </p>
+
             <div>
                 <form>
                     <label><input class="relabs" type="radio" name="dataset" value="Absolute" checked>Absolute score</label>
                     <label><input class="relabs" type="radio" name="dataset" value="Relative" >Relatief ten opzichte van Nederland</label><br>
                 </form>
             </div>
+
             <button class="reset">Reset lijnen</button>
+
             <div id="changechart"></div>
+
         </div>
       </div>
 
@@ -122,6 +129,7 @@ the Netherlands -->
           </div>
           <div id="piechart"></div>
         </div>
+
       </div>
 
       <div class="row">
@@ -132,10 +140,8 @@ the Netherlands -->
           <p>Deze grafiek geeft de verkiezingsuitslagen van alle partijen die bij Tweede Kamerverkiezingen meer dan 1 procent van de stemmen hebben gekregen weer over een periode van 1946 tot 2017. Data is afkomstig van <a href="https://www.verkiezingsuitslagen.nl/verkiezingen/">de Kiesraad</a>.</p>
         </div>
 
-        <!-- <div class="col-sm-1"></div> -->
-
         <div class="col-sm-4">
-          <p>Deze grafiek geeft de uitslag van alle partijen in een bepaald gedetailleerd weer. Klik op het menu om een jaar te selecteren.
+          <p>Deze grafiek geeft de uitslag van alle partijen in een bepaald gedetailleerd weer. Klik op het menu om een jaar te selecteren.</p>
         </div>
 
       </div>
@@ -145,20 +151,15 @@ the Netherlands -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
   </body>
 
   <!-- Import D3 V3 and TopoJSON -->
   <script src="datamaps.js"></script>
-  <script src="topojson.js"></script>
-  <script src="topojson.min.js"></script>
-  <!-- <script>
-
-    var topology = topojson.topology({foo: geojson});
-
-  </script> -->
+  <!-- <script src="topojson.js"></script> -->
+  <!-- <script src="topojson.min.js"></script> -->
   <script src="NL_mun_2017.geojson"></script>
-  <!-- <script src="NL_mun_2017.topojson"></script> -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script> -->
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script>
       d3v3 = d3;

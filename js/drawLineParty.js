@@ -131,8 +131,6 @@ function drawLineChart(data) {
     var newLines = svg.selectAll(".line")
                       .data(lineData);
 
-    console.log(lineData);
-
     newLines.enter()
             .append("path")
             .attr("class", "line")
