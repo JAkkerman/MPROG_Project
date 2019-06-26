@@ -54,7 +54,7 @@ function drawAxes(xScale, yScale, type) {
   // appends properties of the rile chart
   if (type == "changechart") {
 
-    var xAxis = d3v5.axisBottom(xScale);
+    var xAxis = d3v5.axisBottom(xScale).tickFormat(d3v5.format("d"));
     svg.append("g")
        .attr("class", "xAxis")
        .attr("transform", "translate(0, "+ line_end_h +")")

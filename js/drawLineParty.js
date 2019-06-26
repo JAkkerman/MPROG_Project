@@ -102,7 +102,7 @@ function drawLineChart(data) {
                      .domain([0, max_val])
                      .range([line_end_h - line_start_h, line_start_h]);
 
-    var xAxis = d3v5.axisBottom(xScale);
+    var xAxis = d3v5.axisBottom(xScale).tickFormat(d3v5.format("d"));
     var yAxis = d3v5.axisLeft(yScale);
 
     var svg = d3v5.select(".linechart")
