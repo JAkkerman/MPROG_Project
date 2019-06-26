@@ -7,7 +7,7 @@ Current-day politics may be the most tumultuous since the Second World War. Majo
 ## Solution
 My data visualization will show electoral data per region (municipality, province, or the whole country) for multiple (general) elections, which will show electoral shifts by comparing different years.
 
-![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Proj_proposal1.jpg)
+![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Img/Proj_proposal1.jpg)
 
 The visualization will include:
 
