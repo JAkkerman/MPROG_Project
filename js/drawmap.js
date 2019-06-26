@@ -1,3 +1,7 @@
+// Joos Akkerman (11304723)
+// MPROG Project (Summer)
+// This file draws a map showing all Dutch municipalities, colored based on their rile score
+
 function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale) {
   /* draws the municipal map of the Netherlands and adds the colors */
 
@@ -14,7 +18,7 @@ function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale
     var path = d3v5.geoPath()
                    .projection(projection);
 
-    let svg = d3v5.select("#map")
+    var svg = d3v5.select("#map")
                   .append("svg")
                   .attr("class", "map")
                   .attr("width", map_w)
@@ -23,7 +27,7 @@ function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale
     svg.append("text")
        .attr("id", "regionName")
        .text("Nederland")
-       .attr("y", "30")
+       .attr("y", "30");
 
     var tip = d3v5.tip()
                   .attr('class', 'd3-tip')
@@ -45,51 +49,38 @@ function drawMap(data, data_riles, linexScale, lineyScale, colorScale, paryScale
             gemeente_data = data_riles[0][d.properties.Gemeentenaam].filter(d => d.year == 2017)
             return colorScale(gemeente_data[0].value);
           } else {
-            return "rgb(204, 204, 204)"
+            return "rgb(204, 204, 204)";
           }
        })
        .on("mouseover", tip.show)
        .on("mouseout", tip.hide)
        .on("click", function(d) {
-         // updateRegionName(d.properties.Gemeentenaam);
          drawLineChart(data[0][d.properties.Gemeentenaam], lineyScale);
-         console.log(changeMethod);
          if (changeMethod == "Abs") {
            drawRileChartAbs(data_riles[0][d.properties.Gemeentenaam], d.properties.Gemeentenaam, linexScale, paryScale);
          } else {
            drawRileChartRel(data_riles[0], d.properties.Gemeentenaam, linexScale, paryScale);
          }
          // change values of dropdown piechart
-         dropDownPieOptions(data[0][d.properties.Gemeentenaam], d.properties.Gemeentenaam)
-         drawPieChart.updatePie(data[0][d.properties.Gemeentenaam], 2017)
-         svg.selectAll("#regionName").remove()
-         svg.append("text")
-            .attr("id", "regionName")
-            .text(d.properties.Gemeentenaam)
-            .attr("y", "30")
+         dropDownPieOptions(data[0][d.properties.Gemeentenaam], d.properties.Gemeentenaam);
+         drawPieChart.updatePie(data[0][d.properties.Gemeentenaam], 2017);
+         updateText(d.properties.Gemeentenaam);
        });
-
-       // draw legend
 
    });
 
    function updateText(name) {
-     // console.log("yeet");
-     // text = svg.select("#regionName")
-     // text.text(name)
+     /* changes municipality name in top corner map */
+
+     var svg = d3v5.select(".map");
+
+     svg.selectAll("#regionName").remove();
+     svg.append("text")
+        .attr("id", "regionName")
+        .text(name)
+        .attr("y", "30");
    };
 };
-
-
-function updateRegionName (mun) {
-  /* updates name of selected region */
-
-  d3v5.selectAll("#regionName").remove()
-  d3v5.append("text")
-     .attr("id", "regionName")
-     .text(mun)
-     .attr("y", "30")
-}
 
 
 function mapLegend(colorScale) {

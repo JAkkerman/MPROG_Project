@@ -7,29 +7,30 @@ function drawLineChart(data) {
 /* draws line chart showing election results over time */
 
   drawLineChart.updateLine = updateLine;
+  drawLineChart.updateAxes = updateAxes;
 
   axes = updateAxes(data)
-  let xScale = axes[0]
-  let yScale = axes[1]
-  xAxis = axes[2]
-  yAxis = axes[3]
+  var xScale = axes[0]
+  var yScale = axes[1]
+  // xAxis = axes[2]
+  // yAxis = axes[3]
+  //
+  var svg = d3v5.select(".linechart")
+  //
+  // svg.select(".xAxis").remove();
+  // svg.select(".yAxis").remove();
+  //
+  // svg.append("g")
+  //    .attr("class", "xAxis")
+  //    .attr("transform", "translate(0, "+ line_end_h +")")
+  //    .call(xAxis);
+  //
+  // svg.append("g")
+  //    .attr("class", "yAxis")
+  //    .attr("transform", "translate("+ line_start_w +", "+ line_start_h +")")
+  //    .call(yAxis);
 
-  let svg = d3v5.select(".linechart")
-
-  svg.select(".xAxis").remove();
-  svg.select(".yAxis").remove();
-
-  svg.append("g")
-     .attr("class", "xAxis")
-     .attr("transform", "translate(0, "+ line_end_h +")")
-     .call(xAxis);
-
-  svg.append("g")
-     .attr("class", "yAxis")
-     .attr("transform", "translate("+ line_start_w +", "+ line_start_h +")")
-     .call(yAxis);
-
-  svg.selectAll(".line").remove()
+  // svg.selectAll(".line").remove()
 
   var linetip = d3v5.tip()
                     .attr('class', 'd3-tip')
@@ -58,17 +59,17 @@ function drawLineChart(data) {
                    return yScale(d.value) + line_start_h;
                  });
 
-  lineData.forEach(function(d) {
-    svg.append("path")
+    svg.selectAll(".line")
+      .data(lineData).enter()
+    .append("path")
        .attr("class", "line")
-       .attr("id", d.party)
-       .attr("d", line(d.years))
+       .attr("id", function(d) { return d.party})
+       .attr("d", function(d) {return line(d.years)})
        .attr("fill", "none")
        .attr("stroke-width", "2.5px")
-       .attr("stroke", partyColor(d.party))
+       .attr("stroke", function(d) {return partyColor(d.party)})
        .on("mouseover", linetip.show)
        .on("mouseout", linetip.hide)
-  })
 
 
   function updateAxes(data) {
@@ -104,12 +105,33 @@ function drawLineChart(data) {
     var xAxis = d3v5.axisBottom(xScale);
     var yAxis = d3v5.axisLeft(yScale);
 
+    var svg = d3v5.select(".linechart")
+
+    svg.select(".xAxis").remove();
+    svg.select(".yAxis").remove();
+
+    svg.append("g")
+       .attr("class", "xAxis")
+       .attr("transform", "translate(0, "+ line_end_h +")")
+       .call(xAxis);
+
+    svg.append("g")
+       .attr("class", "yAxis")
+       .attr("transform", "translate("+ line_start_w +", "+ line_start_h +")")
+       .call(yAxis);
+
     return [xScale, yScale, xAxis, yAxis]
   }
 
 
   function updateLine(data) {
     /* updates line chart */
+
+    axes = drawLineChart.updateAxes(data)
+    var xScale = axes[0]
+    var yScale = axes[1]
+
+    var svg = d3v5.select(".linechart");
 
     var lineData = [], party;
 
@@ -135,11 +157,11 @@ function drawLineChart(data) {
             .append("path")
             .attr("class", "line")
             .merge(newLines)
-            .attr("id", d.party)
-            .attr("d", line(d.years))
+            .attr("id", function(d) {return d.party})
+            .attr("d", function(d) {return line(d.years)})
             .attr("fill", "none")
             .attr("stroke-width", "2.5px")
-            .attr("stroke", partyColor(d.party));
+            .attr("stroke", function(d) {return partyColor(d.party)});
 
     newLines.exit().remove();
   }

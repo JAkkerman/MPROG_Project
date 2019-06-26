@@ -61,7 +61,6 @@ Promise.all(requests).then(function(response) {
     drawLineChart(data_NL[0]['Nederland']);
     drawPieChart(data_NL[0]['Nederland'], 2017);
     partyLegend();
-    drawPieChart.updatePie(data_NL[0]['Nederland'], 2017)
     dropDownPieOptions(data_NL[0]['Nederland'], 'Nederland');
 
     var mun = 'Nederland';
@@ -69,11 +68,11 @@ Promise.all(requests).then(function(response) {
     // update graphs if municipality from menu is selected
     d3v5.select(".dropdownmunoptions").on("change", function() {
       mun = this.value;
-
+      // check if selected region is Netherlands, since data is stored in different json
       if (mun == "Nederland") {
-        // drawLineChart.updateLine(data_NL[0]["Nederland"]);
-        drawLineChart(data_NL[0]["Nederland"]);
+        drawLineChart.updateLine(data_NL[0]["Nederland"]);
         dropDownPieOptions(data_NL[0]["Nederland"], "Nederland");
+        // check which rile graph must be drawn
         if (changeMethod == "Abs") {
           drawRileChartAbs(data_riles[0]["Nederland"], "Nederland", xScale, yScaleRile);
         } else {
@@ -82,7 +81,7 @@ Promise.all(requests).then(function(response) {
         drawMap.updateText("Nederland");
         drawPieChart.updatePie(data_NL[0]["Nederland"], 2017);
       } else {
-        drawLineChart(data[0][mun]);
+        drawLineChart.updateLine(data[0][mun]);
         dropDownPieOptions(data[0][mun], mun);
         if (changeMethod == "Abs") {
           drawRileChartAbs(data_riles[0][mun], mun, xScale, yScaleRile);
