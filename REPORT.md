@@ -24,3 +24,8 @@ File Name | Description
 ```drawpie.js```| This file has two main functions. The first function draws the first pie chart for the whole Netherlands in 2017. It contains an update function used to update the pie chart when a different municipality or different year is selected. The second function is used to update the years in the dropdown menu for the pie chart, since for some municipalities there is not data available for all years.
 ```helpers.js```| This file contains of some functions that are used by multiple files. The first function calculates the line scales used by the line charts, and calculates the color scale used by the map and the map's legend. The second function draws the axes for both line charts and gives their axes their titles. The third function creates the legend used for the party colors (used by both the line and pie chart). The Fourth function, used by both the line chart, pie chart and their legend, returns a color for each party, such that parties always get the same color.
 ```drawrilePvdA.js```| This file consists of a simple function that draws the line chart used in the case study.
+
+Other used files are:
+File Names | Description
+-----------|------------
+```convert_NL.py```, ```convert.py```, ```convert_pvda.py``` | These files respectively convert the data for the Netherlands, all municipalities and for the PvdA rile scores into workable JSON formats.
