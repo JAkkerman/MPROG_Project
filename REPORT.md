@@ -16,9 +16,8 @@ Note that the user can navigate between municipalities by either clicking a muni
 The main JavaScript files are:
 
 File Name | Description
-<!-- ----------|------------ -->
-```Project.js```| This is the main file that calls all the functions and relates them to each other.
 ----------|------------
+```Project.js```| This is the main file that calls all the functions and relates them to each other.
 ```drawmap.js```| This file has two main functions. The first one draws the map from a geojson file, and creates the tooltip. It also has a subfunction that changes the little text in left-top corner of the map, showing the selected regions name. The second function is used to make the continuous color legend used to clarify the colors in the map.
 ```drawLineRile.js```| This file has two functions, one for drawing the line of absolute riles and one for drawing the relative riles.
 ```drawLinePart.js```| This file draws the line chart showing the results for all parties. The first function initializes the first line chart with data for the whole Netherlands, and has subfunctions to update the lines and update the axes. The second function selects all the names of municipalities that are in the data set, plus the Netherlands, and appends them to the dropdown menu for regions.
