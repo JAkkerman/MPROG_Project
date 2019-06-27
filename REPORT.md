@@ -3,7 +3,7 @@
 
 My visualization shows the shifts in political preferences in the Netherlands, in the period 1947 to 2017. It shows a map of Dutch municipalities, a line chart and pie chart that shows the election result for all municipalities that existed in 2017, and a line chart that shows the development of the political preference of a region over time.
 
-![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Img/screen6.jpg)
+![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Img/screen6.jpg/)
 
 ## Technical Design
 The visualization consists of the following components:
@@ -13,10 +13,13 @@ The visualization consists of the following components:
 * The pie chart: This chart shows a more detailed overview of the election results in a particular year. Its default year is 2017, but in the menu above you can pick any of the election year the municipality has existed and the pie chart for that particular year will be drawn. The pie pieces show the party name if hovered over, and the colors are the same ones as used for the line chart, thus the legend also covers the pie chart.
 Note that the user can navigate between municipalities by either clicking a municipality on the map or by selecting a municipality in the dropdown menu above the line chart.
 
-The visualization is divided in the following files:
-* Project.js,
-*
-
+The main JavaScript files are:
 File Name | Description
 ----------|------------
-```Project.js```| this is the main file that calls all the functions and relates them to each other.
+```Project.js```| This is the main file that calls all the functions and relates them to each other.
+```drawmap.js```| This file has two main functions. The first one draws the map from a geojson file, and creates the tooltip. It also has a subfunction that changes the little text in left-top corner of the map, showing the selected regions name. The second function is used to make the continuous color legend used to clarify the colors in the map.
+```drawLineRile.js```| This file has two functions, one for drawing the line of absolute riles and one for drawing the relative riles.
+```drawLinePart.js```| This file draws the line chart showing the results for all parties. The first function initializes the first line chart with data for the whole Netherlands, and has subfunctions to update the lines and update the axes. The second function selects all the names of municipalities that are in the data set, plus the Netherlands, and appends them to the dropdown menu for regions.
+```drawpie.js```| This file has two main functions. The first function draws the first pie chart for the whole Netherlands in 2017. It contains an update function used to update the pie chart when a different municipality or different year is selected. The second function is used to update the years in the dropdown menu for the pie chart, since for some municipalities there is not data available for all years.
+```helpers.js```| This file contains of some functions that are used by multiple files. The first function calculates the line scales used by the line charts, and calculates the color scale used by the map and the map's legend. The second function draws the axes for both line charts and gives their axes their titles. The third function creates the legend used for the party colors (used by both the line and pie chart). The Fourth function, used by both the line chart, pie chart and their legend, returns a color for each party, such that parties always get the same color.
+```drawrilePvdA.js```| This file consists of a simple function that draws the line chart used in the case study.
