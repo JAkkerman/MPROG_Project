@@ -19,8 +19,6 @@
 15-06-2019: Na veranderingen in mijn datastructuur en meer onderzoek naar de d3 line chart kan ik nu resultaten in een linechart tekenen. Dit gaat echter nog niet helemaal goed, en ik weet niet of dit ligt aan mijn data of aan JavaScript. Maandag zal ik hier naar vragen.
 Ook ga ik vandaag proberen de laatste fouten uit mijn data te halen (zoals bijvoorbeeld dat elke gemeente bij 2017 dezelfde rile krijgt, of dat sommige partijnamen niet hetzelfde zijn doorgevoerd)
 
-16-06-2019:
-
 17-06-2019: Bij de standup hebben we gekeken naar het probleem van de kleuren, en hebben we het erover gehad dat de parallel coordinates. De kleuren zijn nu opgelost, en ik heb ook het probleem opgelost dat de lijnen niet goed werden getekend. Allereerst bij de riles, die altijd ofwel stopte bij 1982 of daarna pas begon (dat is nu een doorlopende lijn) en bij de partijdata werden er rare lijnen getekend (lijnen die terug naar 2017 leken te keren), wat is opgelost door de volgorde in de arrays aan te passen.
 
 18-06-2019: Ik heb met Nigel de tooltip van de partijlijnen aan het werk gekregen en bootstrap geimplementeerd. Ook heb ik met Nigel besproken wat er met de parallel coordinates moet gebeuren, en we zijn tot de conclusie gekomen dat ik het beste nog een pie-chart kan maken met partij resultaten per jaar (wat ook overzichtelijker is dan alleen de lijnen) die met een drop-down menu kan worden aangepast. Ook ga ik de (semi-) parallel coordinates een optie geven om de absolute waarden van een gemeente te laten zien en de relatieve positie ten opzichte van de Nederlandse score.
@@ -35,4 +33,8 @@ Ook ga ik vandaag proberen de laatste fouten uit mijn data te halen (zoals bijvo
 
 24-06-2019: Ik heb vandaag met name gewerkt aan de update functie, die nog steeds een aantal mankementen vertoond. Ook heb ik twee uitleggende pagina's bijgevoegd, die het verhalende aspect van de visualisatie moeten vormen. Ook heb ik op de pagina een aantal uitleggende teksten toegevoegd en links naar de bronnen toegevoegd.
 
-25-06-2019: Vandaag heb ik met hulp van Nigel de update-functie van de pie chart aan het werk gekregen. Verder heb ik de functies in aparte files opgesplitst en in verschillende files toegevoegd. Ook heb ik de 
+25-06-2019: Vandaag heb ik met hulp van Nigel de update-functie van de pie chart aan het werk gekregen. Verder heb ik de functies in aparte files opgesplitst en in verschillende files toegevoegd. 
+
+26-06-2019: Vandaag heb ik de laatste bugs weggewerkt, de update functie voor mijn line chart gemaakt en mijn filmpje opgenomen. De line chart was moeilijk up te daten door de manier waarop hem getekend heb, maar na hulp van Nigel doe ik dit nu op de juiste manier en kan ik ook makkelijk de lijnen updaten. Ook heb ik de nieuwe readme opgesteld.
+
+27-06-2019: Ik heb mijn report geschreven en mijn filmpje geupload. Verder heb ik mijn GitHub opgeruimd en de laatste aanpassingen aan mijn readme en processbook gemaakt.
