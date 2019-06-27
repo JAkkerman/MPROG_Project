@@ -3,7 +3,7 @@
 
 My visualization shows the shifts in political preferences in the Netherlands, in the period 1947 to 2017. It shows a map of Dutch municipalities, a line chart and pie chart that shows the election result for all municipalities that existed in 2017, and a line chart that shows the development of the political preference of a region over time.
 
-![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Img/screen6.jpg/)
+![alt text](https://github.com/JAkkerman/MPROG_Project/blob/master/Img/screen6.JPG)
 
 ## Technical Design
 The visualization consists of the following components:
@@ -26,6 +26,15 @@ File Name | Description
 ```drawrilePvdA.js```| This file consists of a simple function that draws the line chart used in the case study.
 
 Other used files are:
-File Names | Description
------------|------------
-```convert_NL.py```, ```convert.py```, ```convert_pvda.py``` | These files respectively convert the data for the Netherlands, all municipalities and for the PvdA rile scores into workable JSON formats.
+* ```convert_NL.py```, ```convert.py```, ```convert_pvda.py```: These files respectively convert the data for the Netherlands, all municipalities and for the PvdA rile scores into workable JSON formats.
+* ```index.html```, ```visualization.html```, ```casestudy.html```: These files set up the website.
+* ```data.json```, ```data_NL.json```, ```data_rile.json```: These files contain the data for respectively all municipalities (electoral data), the Netherlands (electoral data) and all riles for all regions.
+
+## Challenges during development:
+* First of all, the data was harder to amend than anticipated. There was often a discrepancy between the names used in different data sets, and since the data sets were large and numerous, it took a while to get a good python program than could convert the data without mistakes. This meant I had to start later with the visualizations.
+* The map did not load for a long time. First of all, finding the correct map was difficult, and then this map was too big, so it had to be shrunk. Once this worked, it took a while to set the colors of the municipalities. 
+* The update functions took a while to function, but in the end I managed to get them working for both the pie chart and the line chart.
+* The chart I had in mind for the riles turned out to just be another line chart, so I had to create a pie chart. In the end, I think this is actually a good addition and I am glad I added it.
+
+## Defence of the current format
+I think the combinations of charts gives a nice insight in the political shifts. The effects are visible, which was my target. I also like the large amount of data that I have incoporated. There is a lot of data available for all municipalities, which gives the visualization a nice depth, especially for those interested in politics. If I had more time, I would focus more on the map. I would for instance try to show water on the map (for instance, the Ijselmeer is now shown as if it is land). I would also try to get maps for every year, and then make a slider so that the user can see the changes in color on the map. Since the municipal map changed so much in the studied period, I could not incorporate this in my visualization due to time constraints.
